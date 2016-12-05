@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="nefu-gdms:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="nefu-gdms.war">
+      <element id="artifact" artifact-name="nefu-gdms:war exploded" />
+    </root>
+  </artifact>
+</component>
