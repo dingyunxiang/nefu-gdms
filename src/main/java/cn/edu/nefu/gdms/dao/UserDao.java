@@ -1,6 +1,7 @@
 package cn.edu.nefu.gdms.dao;
 
 import cn.edu.nefu.gdms.model.UserPO;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;

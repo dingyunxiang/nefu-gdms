@@ -5,6 +5,11 @@
          version="3.1">
 
     <!--配置DisapatcherServlet-->
+    <servlet-mapping>
+        <servlet-name>gdms-dispatcher</servlet-name>
+        <!--默认匹配所有的请求-->
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>gdms-dispatcher</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -13,9 +18,5 @@
             <param-value>classpath:applicationContext.xml</param-value>
         </init-param>
     </servlet>
-    <servlet-mapping>
-        <servlet-name>gdms-dispatcher</servlet-name>
-        <!--默认匹配所有的请求-->
-        <url-pattern>/</url-pattern>
-    </servlet-mapping>
+
 </web-app>
