@@ -17,12 +17,12 @@ public class StudentBiz {
     @Autowired
     private UserDao userDao;
 
-    public boolean insertStudent(StudentDTO studentDTO) {
+    public long insertStudent(StudentDTO studentDTO) {
         UserPO userPO = getUserPO(studentDTO);
 
         userPO.setCreateTime(System.currentTimeMillis());
         userPO.setUpdateTime(userPO.getCreateTime());
-        return userDao.insert(userPO) > 0;
+        return userDao.insert(userPO);
     }
 
     public void insertStudentList(List<StudentDTO> studentDTOList) {
@@ -43,7 +43,6 @@ public class StudentBiz {
     }
 
 
-
     public List<StudentDTO> getStudentDTOList(int offset, int size, String username, String name) {
         return getStudentDTOList(userDao.findByType(UserTypeEnum.STUDENT.getValue(), offset, size, username, name));
     }
@@ -58,6 +57,10 @@ public class StudentBiz {
         return list;
     }
 
+    public List<StudentDTO> getStudentsByTutorId(long tutorId) {
+        return getStudentDTOList(userDao.findByTutorId(tutorId));
+    }
+
 
     private UserPO getUserPO(StudentDTO studentDTO) {
         UserPO userPO = new UserPO();
@@ -67,7 +70,7 @@ public class StudentBiz {
 //        userPO.setClasses(studentDTO.getClasses());
 //        userPO.setName(studentDTO.getName());
 
-        BeanUtils.copyProperties(userPO, studentDTO);
+        BeanUtils.copyProperties(studentDTO, userPO);
         //设置学生type
         userPO.setTypeId(UserTypeEnum.STUDENT.getValue());
         return userPO;
@@ -77,7 +80,7 @@ public class StudentBiz {
     private StudentDTO getStudentDTO(UserPO userPO) {
         StudentDTO studentDTO = new StudentDTO();
 
-        BeanUtils.copyProperties(studentDTO, userPO);
+        BeanUtils.copyProperties(userPO, studentDTO);
         return studentDTO;
     }
 

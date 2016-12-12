@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by dingyunxiang on 16/12/12.
  */
-public class ExcelUtil<T> {
+public class ExcelUtils<T> {
 
 
     public List<T> obatainList(File f) {

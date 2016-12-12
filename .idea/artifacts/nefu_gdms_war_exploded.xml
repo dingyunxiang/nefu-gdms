@@ -36,6 +36,14 @@
           <element id="library" level="project" name="Maven: redis.clients:jedis:2.7.3" />
           <element id="library" level="project" name="Maven: org.apache.commons:commons-pool2:2.3" />
           <element id="library" level="project" name="Maven: org.projectlombok:lombok:1.16.4" />
+          <element id="library" level="project" name="Maven: org.apache.poi:poi:3.9" />
+          <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.5" />
+          <element id="library" level="project" name="Maven: org.apache.karaf.assemblies.features:standard:2.4.4" />
+          <element id="library" level="project" name="Maven: javax.servlet:jstl:1.2" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.4.5" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.4.0" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.4.5" />
+          <element id="library" level="project" name="Maven: javax.servlet:javax.servlet-api:4.0.0-b01" />
         </element>
       </element>
       <element id="directory" name="META-INF">

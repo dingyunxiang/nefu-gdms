@@ -94,6 +94,14 @@
         limit #{offset},#{size}
     </select>
 
+    <select id="findByTutorId"  resultType="cn.edu.nefu.gdms.model.UserPO">
+        SELECT
+        <include refid="Select_Columns"/>
+        FROM user
+        WHERE tutor_id = #{tutorId}
+        ORDER BY id
+    </select>
+
 </mapper>
 
 
