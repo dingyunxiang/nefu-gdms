@@ -2,7 +2,6 @@ package cn.edu.nefu.gdms.biz;
 
 import cn.edu.nefu.gdms.common.UserTypeEnum;
 import cn.edu.nefu.gdms.dao.UserDao;
-import cn.edu.nefu.gdms.dto.StudentDTO;
 import cn.edu.nefu.gdms.dto.TeacherDTO;
 import cn.edu.nefu.gdms.model.UserPO;
 import org.springframework.beans.BeanUtils;

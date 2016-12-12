@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.nefu.gdms.dao.TopicDao">
+    <sql id="Table_Name">
+        topic
+    </sql>
+
+
+    <sql id="Insert_Columns">
+        tutor_id,stu_id,status,title,file_path,create_time,update_time
+    </sql>
+
+    <sql id="Insert_Values">
+        #{tutorId},#{stuId},#{status},#{title},#{filePath},#{createTime},#{updateTime}
+    </sql>
+
+    <sql id="Select_Columns">
+        id,
+        <include refid="Insert_Columns"/>
+    </sql>
+
+    <sql id="Update_Colums">
+        tutor_id=#{tutorId},stu_id=#{stuId},status=#{status},file_path=#{filePath},create_time=#{createTime},update_time=#{updateTime}
+    </sql>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="cn.edu.nefu.gdms.model.TopicPO">
+        INSERT INTO <include refid="Table_Name"/>
+        (<include refid="Insert_Columns"/>)
+        VALUES
+        (<include refid="Insert_Values"/>)
+    </insert>
+
+    <update id="update" parameterType="cn.edu.nefu.gdms.model.TopicPO">
+        UPDATE <include refid="Table_Name"/> SET
+        <include refid="Update_Colums"/>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="long">
+        DELETE FROM <include refid="Table_Name"/>
+        WHERE id = #{id}
+    </delete>
+
+    <select id="get" parameterType="long" resultType="cn.edu.nefu.gdms.model.TopicPO">
+        SELECT
+        <include refid="Select_Columns"/>
+        FROM <include refid="Table_Name"/>
+        WHERE id = #{id}
+    </select>
+
+    <select id="findTopicByStuId" resultType="cn.edu.nefu.gdms.model.TopicPO">
+        SELECT
+        <include refid="Select_Columns"/>
+        FROM <include refid="Table_Name"/>
+        WHERE stu_id = #{stuId}
+    </select>
+
+    <select id="findTopicListByTutorId"  resultType="cn.edu.nefu.gdms.model.TopicPO">
+        SELECT
+        <include refid="Select_Columns"/>
+        FROM <include refid="Table_Name"/>
+        WHERE tutor_id = #{tutorId}
+        ORDER BY id
+    </select>
+
+
+</mapper>
+
+
+

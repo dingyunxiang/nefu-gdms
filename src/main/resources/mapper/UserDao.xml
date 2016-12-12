@@ -16,6 +16,10 @@
         <result column="update_time" property="updateTime" jdbcType="BIGINT"/>
     </resultMap>
 
+    <sql id="Table_Name">
+        user
+    </sql>
+
     <sql id="Insert_Columns">
         tutor_id,type_id,username,name,classes,password,phone,email,create_time,update_time,title
     </sql>
@@ -39,14 +43,14 @@
 
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="cn.edu.nefu.gdms.model.UserPO">
-        INSERT INTO user
+        INSERT INTO <include refid="Table_Name"/>
         (<include refid="Insert_Columns"/>)
         VALUES
         (<include refid="Insert_Values"/>)
     </insert>
 
     <insert id="insertList" parameterType="arraylist">
-        INSERT INTO user
+        INSERT INTO <include refid="Table_Name"/>
         (<include refid="Insert_Columns"/>)
         VALUES
         <foreach collection="list" item="item" index="index" separator =",">
@@ -55,34 +59,34 @@
     </insert>
 
     <update id="update" parameterType="cn.edu.nefu.gdms.model.UserPO">
-        UPDATE user SET
+        UPDATE <include refid="Table_Name"/> SET
         <include refid="Update_Colums"/>
         WHERE id = #{id}
     </update>
 
     <delete id="delete" parameterType="long">
-        DELETE FROM user
+        DELETE FROM <include refid="Table_Name"/>
         WHERE id = #{id}
     </delete>
 
     <select id="get" parameterType="long" resultType="cn.edu.nefu.gdms.model.UserPO">
         SELECT
         <include refid="Select_Columns"/>
-        FROM user
+        FROM <include refid="Table_Name"/>
         WHERE id = #{id}
     </select>
 
     <select id="find" parameterType="string" resultType="cn.edu.nefu.gdms.model.UserPO">
         SELECT
         <include refid="Select_Columns"/>
-        FROM user
+        FROM <include refid="Table_Name"/>
         WHERE username = #{username}
     </select>
 
     <select id="findByType"  resultType="cn.edu.nefu.gdms.model.UserPO">
         SELECT
         <include refid="Select_Columns"/>
-        FROM user
+        FROM <include refid="Table_Name"/>
         WHERE type_id = #{type}
         <if test="username != null">
             AND username LIKE CONCAT(CONCAT('%', #{username}),'%')
@@ -97,7 +101,7 @@
     <select id="findByTutorId"  resultType="cn.edu.nefu.gdms.model.UserPO">
         SELECT
         <include refid="Select_Columns"/>
-        FROM user
+        FROM <include refid="Table_Name"/>
         WHERE tutor_id = #{tutorId}
         ORDER BY id
     </select>
