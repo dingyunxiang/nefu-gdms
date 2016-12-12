@@ -1,8 +1,11 @@
 package cn.edu.nefu.gdms.biz;
 
+import cn.edu.nefu.gdms.common.ErrorCodeEnum;
 import cn.edu.nefu.gdms.common.UserTypeEnum;
 import cn.edu.nefu.gdms.dao.UserDao;
 import cn.edu.nefu.gdms.dto.StudentDTO;
+import cn.edu.nefu.gdms.exception.ServiceException;
+import cn.edu.nefu.gdms.model.TopicPO;
 import cn.edu.nefu.gdms.model.UserPO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,23 @@ import java.util.List;
 public class StudentBiz {
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private TopicBiz topicBiz;
+
+
+    public boolean chooseTopic(long stuId, long topicId) {
+        UserPO userPO = userDao.get(stuId);
+        TopicPO topicPO = topicBiz.get(topicId);
+        if (userPO == null || userPO.getTutorId() < 0) {
+            throw new ServiceException(ErrorCodeEnum.ROLE_NOT_STU);
+        }
+        if (topicPO.getTutorId() != userPO.getTutorId()) {
+            throw new ServiceException(ErrorCodeEnum.CALL_BSERVICE_ERROR);
+        }
+
+        topicPO.setStuId(stuId);
+        return topicBiz.update(topicPO);
+    }
 
     public long insertStudent(StudentDTO studentDTO) {
         UserPO userPO = getUserPO(studentDTO);
@@ -42,20 +62,10 @@ public class StudentBiz {
         return userDao.update(userPO) > 0;
     }
 
-
     public List<StudentDTO> getStudentDTOList(int offset, int size, String username, String name) {
         return getStudentDTOList(userDao.findByType(UserTypeEnum.STUDENT.getValue(), offset, size, username, name));
     }
 
-
-    private List<UserPO> getUserPOList(List<StudentDTO> studentDTOList) {
-        List<UserPO> list = new ArrayList<UserPO>(studentDTOList.size());
-
-        for (StudentDTO studentDTO : studentDTOList) {
-            list.add(getUserPO(studentDTO));
-        }
-        return list;
-    }
 
     public List<StudentDTO> getStudentsByTutorId(long tutorId) {
         return getStudentDTOList(userDao.findByTutorId(tutorId));
@@ -90,6 +100,15 @@ public class StudentBiz {
 
         for (UserPO userPO : userPOList) {
             list.add(getStudentDTO(userPO));
+        }
+        return list;
+    }
+
+    private List<UserPO> getUserPOList(List<StudentDTO> studentDTOList) {
+        List<UserPO> list = new ArrayList<UserPO>(studentDTOList.size());
+
+        for (StudentDTO studentDTO : studentDTOList) {
+            list.add(getUserPO(studentDTO));
         }
         return list;
     }

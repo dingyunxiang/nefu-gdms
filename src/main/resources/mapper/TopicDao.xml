@@ -26,41 +26,48 @@
     </sql>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="cn.edu.nefu.gdms.model.TopicPO">
-        INSERT INTO <include refid="Table_Name"/>
+        INSERT INTO
+        <include refid="Table_Name"/>
         (<include refid="Insert_Columns"/>)
         VALUES
         (<include refid="Insert_Values"/>)
     </insert>
 
     <update id="update" parameterType="cn.edu.nefu.gdms.model.TopicPO">
-        UPDATE <include refid="Table_Name"/> SET
+        UPDATE
+        <include refid="Table_Name"/>
+        SET
         <include refid="Update_Colums"/>
         WHERE id = #{id}
     </update>
 
     <delete id="delete" parameterType="long">
-        DELETE FROM <include refid="Table_Name"/>
+        DELETE FROM
+        <include refid="Table_Name"/>
         WHERE id = #{id}
     </delete>
 
     <select id="get" parameterType="long" resultType="cn.edu.nefu.gdms.model.TopicPO">
         SELECT
         <include refid="Select_Columns"/>
-        FROM <include refid="Table_Name"/>
+        FROM
+        <include refid="Table_Name"/>
         WHERE id = #{id}
     </select>
 
     <select id="findTopicByStuId" resultType="cn.edu.nefu.gdms.model.TopicPO">
         SELECT
         <include refid="Select_Columns"/>
-        FROM <include refid="Table_Name"/>
+        FROM
+        <include refid="Table_Name"/>
         WHERE stu_id = #{stuId}
     </select>
 
-    <select id="findTopicListByTutorId"  resultType="cn.edu.nefu.gdms.model.TopicPO">
+    <select id="findTopicListByTutorId" resultType="cn.edu.nefu.gdms.model.TopicPO">
         SELECT
         <include refid="Select_Columns"/>
-        FROM <include refid="Table_Name"/>
+        FROM
+        <include refid="Table_Name"/>
         WHERE tutor_id = #{tutorId}
         ORDER BY id
     </select>
