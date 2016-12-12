@@ -99,7 +99,6 @@
         注意use-expressions=true.表示开启表达式,否则表达式将不可用. see:http://www.family168.com/tutorial/springsec3/html/el-access.html
     -->
 
-
     <!-- security="none"  不过滤这些资源-->
     <sec:http pattern="/js/*" security="none"/>
     <sec:http pattern="/lonin.jsp" security="none"/>
@@ -148,8 +147,6 @@
         通过 customUserDetailsService,Spring会控制用户的访问级别.
         也可以理解成:以后我们和数据库操作就是通过customUserDetailsService来进行关联.
      -->
-
-
 
 </beans>
 

@@ -18,7 +18,7 @@
         <admin_port>9000</admin_port>
         <webapp_path>src/main/webapp</webapp_path>
         <service_name>nefu-gdms</service_name>
-        <log_level>info</log_level>
+        <log_level>debug</log_level>
     </properties>
 
     <dependencies>
@@ -181,11 +181,11 @@
                         </resource>
                         <resource>
                             <filtering>true</filtering>
-                            <directory>${project.basedir}/src/main/webapp/resources/js</directory>
+                            <directory>${project.basedir}/src/main/webapp/resource/js</directory>
                             <includes>
                                 <include>**/main.js</include>
                             </includes>
-                            <targetPath>resources/js</targetPath>
+                            <targetPath>resource/js</targetPath>
                         </resource>
                     </webResources>
                 </configuration>
