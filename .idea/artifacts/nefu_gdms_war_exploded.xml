@@ -38,6 +38,7 @@
           <element id="library" level="project" name="Maven: org.projectlombok:lombok:1.16.4" />
           <element id="library" level="project" name="Maven: org.apache.poi:poi:3.9" />
           <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.5" />
+          <element id="library" level="project" name="Maven: org.apache.commons:commons-lang3:3.4" />
           <element id="library" level="project" name="Maven: org.apache.karaf.assemblies.features:standard:2.4.4" />
           <element id="library" level="project" name="Maven: javax.servlet:jstl:1.2" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.4.5" />
