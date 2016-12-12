@@ -17,15 +17,15 @@
     </resultMap>
 
     <sql id="Insert_Columns">
-        tutor_id,type_id,username,password,phone,email,create_time,update_time
+        tutor_id,type_id,username,name,classes,password,phone,email,create_time,update_time,title
     </sql>
 
     <sql id="Insert_Values">
-        #{tutorId},#{typeId},#{username},#{password},#{phone},#{email},#{createTime},#{updateTime}
+        #{tutorId},#{typeId},#{username},#{name},#{classes},#{password},#{phone},#{email},#{createTime},#{updateTime},#{title}
     </sql>
 
     <sql id="Insert_List_Values">
-        #{item.tutorId},#{item.typeId},#{item.username},#{item.password},#{item.phone},#{item.email},#{item.createTime},#{item.updateTime}
+        #{item.tutorId},#{item.typeId},#{item.username},#{item.name},#{item.classes},#{item.password},#{item.phone},#{item.email},#{item.createTime},#{item.updateTime},#{item.title}
     </sql>
 
     <sql id="Select_Columns">
@@ -34,7 +34,7 @@
     </sql>
 
     <sql id="Update_Colums">
-        id=#{id},tutor_id=#{tutorId},type_id=#{typeId},username=#{username},password=#{password},phone=#{phone},email=#{email},create_time=#{createTime},update_time=#{updateTime}
+        id=#{id},tutor_id=#{tutorId},type_id=#{typeId},username=#{username},name=#{name},classes=#{classes},password=#{password},phone=#{phone},email=#{email},create_time=#{createTime},update_time=#{updateTime},title=#{title}
     </sql>
 
 
@@ -77,6 +77,21 @@
         <include refid="Select_Columns"/>
         FROM user
         WHERE username = #{username}
+    </select>
+
+    <select id="findByType"  resultType="cn.edu.nefu.gdms.model.UserPO">
+        SELECT
+        <include refid="Select_Columns"/>
+        FROM user
+        WHERE type_id = #{type}
+        <if test="username != null">
+            AND username LIKE CONCAT(CONCAT('%', #{username}),'%')
+        </if>
+        <if test="name != null">
+            AND name LIKE CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+        ORDER BY id
+        limit #{offset},#{size}
     </select>
 
 </mapper>

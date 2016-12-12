@@ -17,6 +17,11 @@ import java.util.List;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext.xml"})
 public class UserDaoTest {
+    @Test
+    public void findByType() throws Exception {
+        List<UserPO> list = userDao.findByType(0,0,10,"42",null);
+        System.out.println(list.size());
+    }
 
     @Autowired
     private UserDao userDao;
@@ -44,7 +49,7 @@ public class UserDaoTest {
     }
 
     @Test
-    public void testInsertLisy(){
+    public void testInsertList(){
         List<UserPO> list = new ArrayList<UserPO>();
         list.add(TestDataHelper.getUser());
         list.add(TestDataHelper.getUser());

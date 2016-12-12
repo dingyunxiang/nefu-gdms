@@ -37,7 +37,7 @@
 
         <!--c3p0连接池的私有属性-->
         <property name="maxPoolSize" value="100"/>
-        <property name="minPoolSize" value="40"/>
+        <property name="minPoolSize" value="20"/>
         <!-- 线程池初始数量 -->
         <property name="initialPoolSize" value="20"></property>
         <!--close时不要coomit-->

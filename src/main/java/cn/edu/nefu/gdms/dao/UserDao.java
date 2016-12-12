@@ -1,8 +1,7 @@
 package cn.edu.nefu.gdms.dao;
 
 import cn.edu.nefu.gdms.model.UserPO;
-import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,9 +16,11 @@ public interface UserDao {
 
     int delete(long id);
 
-    int update( UserPO userPO);
+    int update(UserPO userPO);
 
     UserPO get(long id);
 
     UserPO find(String username);
+
+    List<UserPO> findByType(@Param("type") int type, @Param("offset") int offset, @Param("size") int size, @Param("username") String username, @Param("name") String name);
 }
