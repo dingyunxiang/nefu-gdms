@@ -19,11 +19,16 @@ import java.util.List;
 public class TeacherBiz {
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private TopicBiz topicBiz;
 
     public long uploadTopic(TopicPO topicPO, File file) {
-        String filePath = FileUtils.getTopicFilePath(topicPO.getYears(),topicPO.getTutorId());
+        String filePath = FileUtils.getTeacherFilePath(topicPO.getYears(), topicPO.getTutorId());
         String fileName = file.getName();
-
+        FileUtils.saveFile(filePath, fileName, file);
+        topicPO.setFilePath(filePath + fileName);
+        topicPO.setStatus(0);
+        topicBiz.insert(topicPO);
         return 0;
     }
 

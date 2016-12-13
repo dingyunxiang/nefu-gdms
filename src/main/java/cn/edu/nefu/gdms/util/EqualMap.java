@@ -1,8 +1,8 @@
 package cn.edu.nefu.gdms.util;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
+import java.util.List;
 
 /**
  * Created by dingyunxiang on 16/12/13.
@@ -11,8 +11,11 @@ public class EqualMap<K, V> {
     private HashMap<K, V> map1 = new HashMap<K, V>();
     private HashMap<V, K> map2 = new HashMap<V, K>();
 
+    private List<K> key = new ArrayList<K>();
+    private List<V> value = new ArrayList<V>();
+
     public int size() {
-        return map1.size();
+        return key.size();
     }
 
     public boolean isEmpty() {
@@ -23,25 +26,26 @@ public class EqualMap<K, V> {
         return map1.containsKey(k) || map2.containsKey(k);
     }
 
-    public Object removeFromOne(K k) {
-        return map1.remove(k);
-    }
 
     public void clear() {
         map1.clear();
         map2.clear();
+        key.clear();
+        value.clear();
     }
 
-    public Set keySet() {
-        return map1.keySet();
+    public List<K> keySet() {
+        return key;
     }
 
-    public Collection values() {
-        return map1.values();
+    public List<V> values() {
+        return value;
     }
 
 
     public void putVal(K k, V v) {
+        key.add(k);
+        value.add(v);
         map1.put(k, v);
         map2.put(v, k);
     }

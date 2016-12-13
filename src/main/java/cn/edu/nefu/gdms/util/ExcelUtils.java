@@ -22,7 +22,7 @@ import java.util.Map;
  */
 public class ExcelUtils<T> {
 
-    public List<T> obatainList(File file, Class<T> type, Map<String, String> map) {
+    public List<T> obatainList(File file, Class<T> type, EqualMap<String, String> map) {
         List<T> list = new ArrayList<T>();
 
         HSSFCell[][] cellArr = getCellsFromFile(file);
@@ -36,6 +36,9 @@ public class ExcelUtils<T> {
                 for (Field field : fields) {
                     field.setAccessible(true);
                     PropertyDescriptor pd = new PropertyDescriptor(field.getName(), type);
+                    if (!paramMap.containsKey(field.getName())) {
+                        continue;
+                    }
                     int j = paramMap.get(field.getName());
                     Method getMethod = pd.getWriteMethod();
                     getMethod.invoke(target, afterTransValue(cellArr[i][j], field));
@@ -52,22 +55,25 @@ public class ExcelUtils<T> {
 
     public File obtainFile(List<T> list, Class<T> type, String fileName, EqualMap<String, String> map) {
         HSSFWorkbook wb = new HSSFWorkbook();
-        HSSFCell[][] cellArr = initExcel(wb, list.size(), map.size());
+        HSSFCell[][] cellArr = initExcel(wb, list.size() + 1, map.size());
 
-        int index = 0;
-        String[] str = (String[]) map.keySet().toArray();
+//        int index = 0;
+        List<String> str = map.keySet();
         for (int i = 0; i < map.size(); i++) {
-            cellArr[0][i + 1].setCellValue(str[i]);
+            cellArr[0][i].setCellValue(map.getFromKey(str.get(i)));
+            int index = 1;
             for (T t : list) {
+                Field field = null;
+                Object o = null;
                 try {
-                    PropertyDescriptor pd = new PropertyDescriptor(map.getFromKey(str[i]), type);
+                    PropertyDescriptor pd = new PropertyDescriptor(str.get(i), type);
                     Method getMethod = pd.getReadMethod();//获得get方法
-                    Object o = getMethod.invoke(t);//执行get方法返回一个Object
-                    Field field = type.getDeclaredField("map.getFromKey(str[i])");
-                    setTranseValue(cellArr[index++][i + 1], field, o);
+                    o = getMethod.invoke(t);//执行get方法返回一个Object
+                    field = type.getDeclaredField(str.get(i));
                 } catch (Exception e) {
                     throw new ServiceException(ErrorCodeEnum.RELECT_ERROR);
                 }
+                setTranseValue(cellArr[index++][i], field, o);
             }
         }
 
@@ -86,7 +92,7 @@ public class ExcelUtils<T> {
     private void setTranseValue(HSSFCell cell, Field field, Object object) {
         if (field.getGenericType().toString().equals("long") || field.getGenericType().toString().equals("int")) {
             cell.setCellValue(Double.valueOf(object.toString()));
-        } else if (field.getGenericType().equals("class java.lang.String")) {
+        } else if (field.getGenericType().toString().equals("class java.lang.String")) {
             cell.setCellValue(object.toString());
         }
     }
@@ -124,15 +130,15 @@ public class ExcelUtils<T> {
         style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
         style.setFillForegroundColor(HSSFColor.LIGHT_TURQUOISE.index);
         style.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-
-        // 设置边框
-        style.setBottomBorderColor(HSSFColor.RED.index);
-        style.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-        style.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-        style.setBorderRight(HSSFCellStyle.BORDER_THIN);
-        style.setBorderTop(HSSFCellStyle.BORDER_THIN);
-
-        style.setFont(font);// 设置字体
+//
+//        // 设置边框
+//        style.setBottomBorderColor(HSSFColor.RED.index);
+//        style.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+//        style.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+//        style.setBorderRight(HSSFCellStyle.BORDER_THIN);
+//        style.setBorderTop(HSSFCellStyle.BORDER_THIN);
+//
+//        style.setFont(font);// 设置字体
         HSSFCell[][] cellArr = new HSSFCell[height + 1][width + 1];
 
 
@@ -180,11 +186,11 @@ public class ExcelUtils<T> {
         return cellArr;
     }
 
-    private Map<String, Integer> getParamMap(HSSFCell[][] cellArr, Map<String, String> map) {
+    private Map<String, Integer> getParamMap(HSSFCell[][] cellArr, EqualMap<String, String> map) {
         Map<String, Integer> paramMap = new HashMap<String, Integer>();
         for (int i = 0; i < cellArr[0].length; i++) {
             String str = cellArr[0][i].getStringCellValue();
-            paramMap.put(map.get(str), i);
+            paramMap.put(map.getFromVal(str), i);
         }
         return paramMap;
     }

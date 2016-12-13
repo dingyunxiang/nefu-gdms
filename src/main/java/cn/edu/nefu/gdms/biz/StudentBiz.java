@@ -22,7 +22,7 @@ public class StudentBiz {
     @Autowired
     private TopicBiz topicBiz;
 
-
+    //选题
     public boolean chooseTopic(long stuId, long topicId) {
         UserPO userPO = userDao.get(stuId);
         TopicPO topicPO = topicBiz.get(topicId);
@@ -35,6 +35,19 @@ public class StudentBiz {
 
         topicPO.setStuId(stuId);
         return topicBiz.update(topicPO);
+    }
+
+    //选择导师
+    public boolean chooseTutor(long studentId, long tutorId) {
+        UserPO userPO = userDao.get(studentId);
+
+        userPO.setTutorId(tutorId);
+        return userDao.update(userPO) > 0;
+    }
+
+    public List<TopicPO> listTopics(long studentId) {
+        UserPO userPO = userDao.get(studentId);
+        return topicBiz.getTopicsByTeaId(userPO.getTutorId());
     }
 
     public long insertStudent(StudentDTO studentDTO) {
@@ -55,12 +68,6 @@ public class StudentBiz {
         userDao.insertList(getUserPOList(studentDTOList));
     }
 
-    public boolean chooseTutor(long studentId, long tutorId) {
-        UserPO userPO = userDao.get(studentId);
-
-        userPO.setTutorId(tutorId);
-        return userDao.update(userPO) > 0;
-    }
 
     public List<StudentDTO> getStudentDTOList(int offset, int size, String username, String name) {
         return getStudentDTOList(userDao.findByType(UserTypeEnum.STUDENT.getValue(), offset, size, username, name));
@@ -74,11 +81,6 @@ public class StudentBiz {
 
     private UserPO getUserPO(StudentDTO studentDTO) {
         UserPO userPO = new UserPO();
-//        userPO.setUsername(studentDTO.getUsername());
-//        userPO.setEmail(studentDTO.getEmail());
-//        userPO.setPhone(studentDTO.getPhone());
-//        userPO.setClasses(studentDTO.getClasses());
-//        userPO.setName(studentDTO.getName());
 
         BeanUtils.copyProperties(studentDTO, userPO);
         //设置学生type
