@@ -22,6 +22,7 @@ public enum ErrorCodeEnum {
     DECRYPT_FAIL(10009, "decrypt fail", "解密失败"),
     DUPLICATED_REQUEST(100010, "duplicated request", "重复请求"),
     BSERVICE_DELAY(100011, "bservice delay", "B端服务延迟"),
+    RELECT_ERROR(100012, "excel reflect error", "excel反射错误"),
 
     //----------------3xxxx Bussiness Errors ---------------
     ROLE_NOT_STU(30001, "Role not student", "角色不为学生或者未选导师"),

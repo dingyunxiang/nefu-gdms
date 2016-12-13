@@ -15,4 +15,5 @@ public class TopicPO {
     private String filePath;
     private long createTime;
     private long updateTime;
+    private int years;
 }

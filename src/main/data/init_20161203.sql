@@ -24,6 +24,7 @@ CREATE TABLE topic (
   title VARCHAR(200) NOT NULL COMMENT '标题',
   file_path VARCHAR(200) NOT NULL COMMENT '文件路径',
   status TINYINT NOT NULL COMMENT '当前状态',
+  years INT NOT NULL COMMENT '论文年数',
   create_time BIGINT NOT NULL,
   update_time BIGINT NOT NULL,
   PRIMARY KEY (id),

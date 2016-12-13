@@ -3,10 +3,13 @@ package cn.edu.nefu.gdms.biz;
 import cn.edu.nefu.gdms.common.UserTypeEnum;
 import cn.edu.nefu.gdms.dao.UserDao;
 import cn.edu.nefu.gdms.dto.TeacherDTO;
+import cn.edu.nefu.gdms.model.TopicPO;
 import cn.edu.nefu.gdms.model.UserPO;
+import cn.edu.nefu.gdms.util.FileUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +19,13 @@ import java.util.List;
 public class TeacherBiz {
     @Autowired
     private UserDao userDao;
+
+    public long uploadTopic(TopicPO topicPO, File file) {
+        String filePath = FileUtils.getTopicFilePath(topicPO.getYears(),topicPO.getTutorId());
+        String fileName = file.getName();
+
+        return 0;
+    }
 
     public long insertTeacher(TeacherDTO teacherDTO) {
         UserPO userPO = getUserPO(teacherDTO);
@@ -34,7 +44,6 @@ public class TeacherBiz {
         }
         userDao.insertList(list);
     }
-
 
 
     private UserPO getUserPO(TeacherDTO teacherDTO) {

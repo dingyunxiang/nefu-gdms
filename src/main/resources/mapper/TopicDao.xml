@@ -9,11 +9,11 @@
 
 
     <sql id="Insert_Columns">
-        tutor_id,stu_id,status,title,file_path,create_time,update_time
+        tutor_id,stu_id,status,title,file_path,create_time,update_time,years
     </sql>
 
     <sql id="Insert_Values">
-        #{tutorId},#{stuId},#{status},#{title},#{filePath},#{createTime},#{updateTime}
+        #{tutorId},#{stuId},#{status},#{title},#{filePath},#{createTime},#{updateTime},#{years}
     </sql>
 
     <sql id="Select_Columns">
@@ -22,7 +22,7 @@
     </sql>
 
     <sql id="Update_Colums">
-        tutor_id=#{tutorId},stu_id=#{stuId},status=#{status},file_path=#{filePath},create_time=#{createTime},update_time=#{updateTime}
+        tutor_id=#{tutorId},stu_id=#{stuId},status=#{status},file_path=#{filePath},create_time=#{createTime},update_time=#{updateTime},years=#{years}
     </sql>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="cn.edu.nefu.gdms.model.TopicPO">

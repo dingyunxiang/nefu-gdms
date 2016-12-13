@@ -19,8 +19,6 @@ public class ResultUtils {
         } else {
             result.setSuccess(false);
         }
-
-
         result.setError(errorCodeEnum.getErrorText());
         return result;
     }
@@ -41,7 +39,6 @@ public class ResultUtils {
         }
         return result;
     }
-
 
     public static Result getSuccessResult() {
         return getResult(ErrorCodeEnum.OK);
