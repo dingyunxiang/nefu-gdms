@@ -23,6 +23,7 @@ public enum ErrorCodeEnum {
     DUPLICATED_REQUEST(100010, "duplicated request", "重复请求"),
     BSERVICE_DELAY(100011, "bservice delay", "B端服务延迟"),
     RELECT_ERROR(100012, "excel reflect error", "excel反射错误"),
+    FILE_REPEAT(100013, "file repeat", "file已存在"),
 
     //----------------3xxxx Bussiness Errors ---------------
     ROLE_NOT_STU(30001, "Role not student", "角色不为学生或者未选导师"),

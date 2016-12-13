@@ -1,18 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5e4896cf-b855-4c18-918c-ee61d85c79c5" name="Default" comment="excelUtils finished">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/util/EqualMap.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/util/FileUtils.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/cn/edu/nefu/gdms/dao/ReflectTest.java" />
+    <list default="true" id="5e4896cf-b855-4c18-918c-ee61d85c79c5" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/data/init_20161203.sql" afterPath="$PROJECT_DIR$/src/main/data/init_20161203.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/biz/TeacherBiz.java" afterPath="$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/biz/TeacherBiz.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/common/ErrorCodeEnum.java" afterPath="$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/common/ErrorCodeEnum.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/model/TopicPO.java" afterPath="$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/model/TopicPO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/util/ExcelUtils.java" afterPath="$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/util/ExcelUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/util/ResultUtils.java" afterPath="$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/util/ResultUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/mapper/TopicDao.xml" afterPath="$PROJECT_DIR$/src/main/resources/mapper/TopicDao.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/util/FileUtils.java" afterPath="$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/util/FileUtils.java" />
     </list>
     <ignored path="nefu-gdms.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -59,8 +51,8 @@
       <file leaf-file-name="ErrorCodeEnum.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/common/ErrorCodeEnum.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="157">
-              <caret line="13" column="4" lean-forward="false" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="4" />
+            <state relative-caret-position="148">
+              <caret line="25" column="22" lean-forward="false" selection-start-line="25" selection-start-column="22" selection-end-line="25" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -76,31 +68,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HSSFCellStyle.java" pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/org/apache/poi/poi/3.9/poi-3.9-sources.jar!/org/apache/poi/hssf/usermodel/HSSFCellStyle.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-514">
-              <caret line="37" column="19" lean-forward="false" selection-start-line="37" selection-start-column="19" selection-end-line="37" selection-end-column="19" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Set.java" pinned="false" current-in-tab="false">
-        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home/src.zip!/java/util/Set.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="166">
-              <caret line="145" column="13" lean-forward="false" selection-start-line="145" selection-start-column="13" selection-end-line="145" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EqualMap.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="EqualMap.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/util/EqualMap.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="35" column="19" lean-forward="true" selection-start-line="35" selection-start-column="19" selection-end-line="35" selection-end-column="19" />
+            <state relative-caret-position="-68">
+              <caret line="37" column="0" lean-forward="true" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#232#238#0" expanded="true" />
@@ -126,36 +98,61 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HashMap.java" pinned="false" current-in-tab="false">
-        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home/src.zip!/java/util/HashMap.java">
+      <file leaf-file-name="FileUtils.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/util/FileUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="148">
-              <caret line="610" column="19" lean-forward="false" selection-start-line="610" selection-start-column="19" selection-end-line="610" selection-end-column="19" />
+            <state relative-caret-position="272">
+              <caret line="60" column="20" lean-forward="true" selection-start-line="60" selection-start-column="20" selection-end-line="60" selection-end-column="20" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#362#363#0" expanded="true" />
+                <element signature="e#420#421#0" expanded="true" />
+                <element signature="e#494#495#0" expanded="true" />
+                <element signature="e#554#555#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ServerException.java" pinned="false" current-in-tab="false">
+        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home/src.zip!/java/rmi/ServerException.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="179">
+              <caret line="51" column="11" lean-forward="false" selection-start-line="51" selection-start-column="11" selection-end-line="51" selection-end-column="11" />
+              <folding>
+                <element signature="e#1088#1089#0" expanded="true" />
+                <element signature="e#1112#1113#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TopicBiz.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/biz/TopicBiz.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="20" column="30" lean-forward="false" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TeacherBiz.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/biz/TeacherBiz.java">
+      <file leaf-file-name="UserBiz.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/biz/UserBiz.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="26" column="17" lean-forward="false" selection-start-line="26" selection-start-column="17" selection-end-line="26" selection-end-column="17" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="68">
+              <caret line="17" column="27" lean-forward="false" selection-start-line="17" selection-start-column="27" selection-end-line="17" selection-end-column="27" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ReflectTest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/cn/edu/nefu/gdms/dao/ReflectTest.java">
+      <file leaf-file-name="UserTypeEnum.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/common/UserTypeEnum.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="27" column="15" lean-forward="true" selection-start-line="27" selection-start-column="15" selection-end-line="27" selection-end-column="15" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="187">
+              <caret line="11" column="4" lean-forward="false" selection-start-line="11" selection-start-column="4" selection-end-line="19" selection-end-column="5" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -247,12 +244,12 @@
         <option value="$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/model/TopicPO.java" />
         <option value="$PROJECT_DIR$/src/main/resources/mapper/TopicDao.xml" />
         <option value="$PROJECT_DIR$/src/main/data/init_20161203.sql" />
-        <option value="$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/util/FileUtils.java" />
         <option value="$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/biz/TeacherBiz.java" />
         <option value="$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/util/EqualMap.java" />
         <option value="$PROJECT_DIR$/src/test/java/cn/edu/nefu/gdms/dao/ReflectTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/common/ErrorCodeEnum.java" />
         <option value="$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/util/ExcelUtils.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/common/ErrorCodeEnum.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/util/FileUtils.java" />
       </list>
     </option>
   </component>
@@ -337,7 +334,7 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="157" />
+    <option name="x" value="-37" />
     <option name="y" value="23" />
     <option name="width" value="1391" />
     <option name="height" value="877" />
@@ -737,6 +734,10 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="gdms" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dao" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1604,7 +1605,7 @@
       <workItem from="1481508468626" duration="6982000" />
       <workItem from="1481515727746" duration="1059000" />
       <workItem from="1481523872382" duration="15455000" />
-      <workItem from="1481592416903" duration="7342000" />
+      <workItem from="1481592416903" duration="9275000" />
     </task>
     <task id="LOCAL-00001" summary="login相关">
       <created>1480951327132</created>
@@ -1662,7 +1663,14 @@
       <option name="project" value="LOCAL" />
       <updated>1481546285612</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="excelUtils finished">
+      <created>1481605365789</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1481605365789</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1698,10 +1706,10 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="57246000" />
+    <option name="totallyTimeSpent" value="59179000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="157" y="23" width="1391" height="877" extended-state="0" />
+    <frame x="-37" y="23" width="1391" height="877" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="PlantUML" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32987398" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1812,7 +1820,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/test/resources/mybatis-config.xml" />
     <entry file="file://$PROJECT_DIR$/src/test/resources/jdbc.properties" />
     <entry file="file://$PROJECT_DIR$/src/test/resources/application-test.xml">
       <provider selected="true" editor-type-id="text-editor">
@@ -1829,7 +1836,7 @@
         <state relative-caret-position="323">
           <caret line="107" column="24" lean-forward="false" selection-start-line="107" selection-start-column="24" selection-end-line="107" selection-end-column="24" />
           <folding>
-            <element signature="e#1681#1692#0" expanded="true" />
+            <element signature="e#1681#1692#0" expanded="false" />
             <marker date="1481526114000" expanded="false" signature="1838:1849" ph="root" />
           </folding>
         </state>
@@ -1850,14 +1857,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/biz/UserBiz.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="17" column="27" lean-forward="false" selection-start-line="17" selection-start-column="27" selection-end-line="17" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/mapper/UserDao.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -1871,14 +1870,6 @@
             <marker date="1481541801000" expanded="true" signature="3430:3829" ph="SELECT FROM user" />
             <marker date="1481541801000" expanded="true" signature="3929:4076" ph="SELECT FROM user" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/common/UserTypeEnum.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="4" lean-forward="false" selection-start-line="11" selection-start-column="4" selection-end-line="19" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1929,7 +1920,7 @@
         <state relative-caret-position="204">
           <caret line="15" column="0" lean-forward="true" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1982,17 +1973,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/biz/TopicBiz.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="20" column="30" lean-forward="false" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/util/MD5Utils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="10" column="30" lean-forward="false" selection-start-line="10" selection-start-column="30" selection-end-line="10" selection-end-column="30" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2169,17 +2154,7 @@
         <state relative-caret-position="170">
           <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
           <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/util/FileUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="15" column="37" lean-forward="false" selection-start-line="15" selection-start-column="37" selection-end-line="15" selection-end-column="37" />
-          <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2251,14 +2226,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/common/ErrorCodeEnum.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="157">
-          <caret line="13" column="4" lean-forward="false" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/util/ExcelUtils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="646">
@@ -2280,8 +2247,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/util/EqualMap.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="35" column="19" lean-forward="true" selection-start-line="35" selection-start-column="19" selection-end-line="35" selection-end-column="19" />
+        <state relative-caret-position="-68">
+          <caret line="37" column="0" lean-forward="true" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#232#238#0" expanded="true" />
@@ -2302,6 +2269,63 @@
             <element signature="e#970#971#0" expanded="true" />
             <element signature="e#1002#1003#0" expanded="true" />
             <element signature="e#1036#1037#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/biz/TopicBiz.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="20" column="30" lean-forward="false" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/biz/UserBiz.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="17" column="27" lean-forward="false" selection-start-line="17" selection-start-column="27" selection-end-line="17" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/common/UserTypeEnum.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="4" lean-forward="false" selection-start-line="11" selection-start-column="4" selection-end-line="19" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/common/ErrorCodeEnum.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="148">
+          <caret line="25" column="22" lean-forward="false" selection-start-line="25" selection-start-column="22" selection-end-line="25" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home/src.zip!/java/rmi/ServerException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="179">
+          <caret line="51" column="11" lean-forward="false" selection-start-line="51" selection-start-column="11" selection-end-line="51" selection-end-column="11" />
+          <folding>
+            <element signature="e#1088#1089#0" expanded="true" />
+            <element signature="e#1112#1113#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nefu/gdms/util/FileUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="60" column="20" lean-forward="true" selection-start-line="60" selection-start-column="20" selection-end-line="60" selection-end-column="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#362#363#0" expanded="true" />
+            <element signature="e#420#421#0" expanded="true" />
+            <element signature="e#494#495#0" expanded="true" />
+            <element signature="e#554#555#0" expanded="true" />
           </folding>
         </state>
       </provider>
