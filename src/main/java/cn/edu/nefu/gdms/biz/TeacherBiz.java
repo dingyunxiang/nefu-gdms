@@ -1,13 +1,16 @@
 package cn.edu.nefu.gdms.biz;
 
+import cn.edu.nefu.gdms.common.ErrorCodeEnum;
 import cn.edu.nefu.gdms.common.UserTypeEnum;
 import cn.edu.nefu.gdms.dao.UserDao;
 import cn.edu.nefu.gdms.dto.TeacherDTO;
+import cn.edu.nefu.gdms.exception.ServiceException;
 import cn.edu.nefu.gdms.model.TopicPO;
 import cn.edu.nefu.gdms.model.UserPO;
 import cn.edu.nefu.gdms.util.FileUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -16,6 +19,7 @@ import java.util.List;
 /**
  * Created by dingyunxiang on 16/12/12.
  */
+@Service
 public class TeacherBiz {
     @Autowired
     private UserDao userDao;
@@ -30,6 +34,14 @@ public class TeacherBiz {
         topicPO.setStatus(0);
         topicBiz.insert(topicPO);
         return 0;
+    }
+
+    public TeacherDTO getTeacherByStuId(long stuId) {
+        UserPO userPO = userDao.get(stuId);
+        if (userPO.getTutorId() <= 0) {
+            throw new ServiceException(ErrorCodeEnum.ROLE_NOT_STU);
+        }
+        return getTeacherDTO(userDao.get(userPO.getTutorId()));
     }
 
     public long insertTeacher(TeacherDTO teacherDTO) {
@@ -57,6 +69,13 @@ public class TeacherBiz {
         BeanUtils.copyProperties(teacherDTO, userPO);
         userPO.setTypeId(UserTypeEnum.TEACHER.getValue());
         return userPO;
+    }
+
+    private TeacherDTO getTeacherDTO(UserPO userPO) {
+        TeacherDTO teacherDTO = new TeacherDTO();
+
+        BeanUtils.copyProperties(userPO, teacherDTO);
+        return teacherDTO;
     }
 
     private List<UserPO> getUserPOList(List<TeacherDTO> teacherDTOList) {

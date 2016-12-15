@@ -3,9 +3,9 @@ package cn.edu.nefu.gdms.dto;
 /**
  * Created by dingyunxiang on 16/12/12.
  */
-public class Result<T> {
+public class Result {
     private boolean success;
-    private T data;
+    private Object data;
     private String error;
 
     public Result() {
@@ -16,7 +16,7 @@ public class Result<T> {
         this.error = error;
     }
 
-    public Result(boolean success, T data) {
+    public Result(boolean success, Object data) {
 
         this.success = success;
         this.data = data;
@@ -31,11 +31,11 @@ public class Result<T> {
         this.success = success;
     }
 
-    public T getData() {
+    public Object getData() {
         return data;
     }
 
-    public void setData(T data) {
+    public void setData(Object data) {
         this.data = data;
     }
 

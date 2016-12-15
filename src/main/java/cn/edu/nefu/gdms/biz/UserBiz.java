@@ -6,6 +6,8 @@ import cn.edu.nefu.gdms.util.MD5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by dingyunxiang on 16/12/5.
  */
@@ -30,5 +32,16 @@ public class UserBiz {
         userPO.setPassword(MD5Utils.MD5(password));
         userPO.setUpdateTime(System.currentTimeMillis());
         return userDao.update(userPO) > 0;
+    }
+
+    public List<UserPO> getUserByIds(List<Long> list) {
+        return userDao.getByIds(list);
+    }
+
+    public boolean updateUserPOs(List<UserPO> list) {
+        for (UserPO userPO : list) {
+            userPO.setUpdateTime(System.currentTimeMillis());
+        }
+        return userDao.updateList(list) == list.size();
     }
 }

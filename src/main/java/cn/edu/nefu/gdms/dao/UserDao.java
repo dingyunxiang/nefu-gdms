@@ -18,7 +18,11 @@ public interface UserDao {
 
     int update(UserPO userPO);
 
+    int updateList(List<UserPO> list);
+
     UserPO get(long id);
+
+    List<UserPO> getByIds(List<Long> list);
 
     UserPO find(String username);
 

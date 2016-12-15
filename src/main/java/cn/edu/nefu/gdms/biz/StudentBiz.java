@@ -4,11 +4,13 @@ import cn.edu.nefu.gdms.common.ErrorCodeEnum;
 import cn.edu.nefu.gdms.common.UserTypeEnum;
 import cn.edu.nefu.gdms.dao.UserDao;
 import cn.edu.nefu.gdms.dto.StudentDTO;
+import cn.edu.nefu.gdms.dto.TeacherDTO;
 import cn.edu.nefu.gdms.exception.ServiceException;
 import cn.edu.nefu.gdms.model.TopicPO;
 import cn.edu.nefu.gdms.model.UserPO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +18,7 @@ import java.util.List;
 /**
  * Created by dingyunxiang on 16/12/12.
  */
+@Service
 public class StudentBiz {
     @Autowired
     private UserDao userDao;
@@ -44,6 +47,7 @@ public class StudentBiz {
         userPO.setTutorId(tutorId);
         return userDao.update(userPO) > 0;
     }
+
 
     public List<TopicPO> listTopics(long studentId) {
         UserPO userPO = userDao.get(studentId);

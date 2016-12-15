@@ -27,7 +27,8 @@ public enum ErrorCodeEnum {
 
     //----------------3xxxx Bussiness Errors ---------------
     ROLE_NOT_STU(30001, "Role not student", "角色不为学生或者未选导师"),
-    STU_NOT_TUTOR(30002, "Student not in teacher", "此题目是你导师的题目");
+    STU_NOT_TUTOR(30002, "Student not in teacher", "此题目是你导师的题目"),
+    TEA_NUM_NOT_ENOUGH(30003, "teacher is less", "老师数量较少");
 
 
     public int errorCode;

@@ -41,52 +41,83 @@
         id=#{id},tutor_id=#{tutorId},type_id=#{typeId},username=#{username},name=#{name},classes=#{classes},password=#{password},phone=#{phone},email=#{email},create_time=#{createTime},update_time=#{updateTime},title=#{title}
     </sql>
 
+    <sql id="Update_List_Colums">
+        id=#{item.id},tutor_id=#{item.tutorId},type_id=#{item.typeId},username=#{item.username},name=#{item.name},classes=#{item.classes},password=#{item.password},phone=#{item.phone},email=#{item.email},create_time=#{item.createTime},update_time=#{item.updateTime},title=#{item.title}
+    </sql>
+
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="cn.edu.nefu.gdms.model.UserPO">
-        INSERT INTO <include refid="Table_Name"/>
+        INSERT INTO
+        <include refid="Table_Name"/>
         (<include refid="Insert_Columns"/>)
         VALUES
         (<include refid="Insert_Values"/>)
     </insert>
 
     <insert id="insertList" parameterType="arraylist">
-        INSERT INTO <include refid="Table_Name"/>
+        INSERT INTO
+        <include refid="Table_Name"/>
         (<include refid="Insert_Columns"/>)
         VALUES
-        <foreach collection="list" item="item" index="index" separator =",">
+        <foreach collection="list" item="item" index="index" separator=",">
             (<include refid="Insert_List_Values"/>)
         </foreach>
     </insert>
 
+    <update id="updateList" parameterType="arraylist">
+        <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+            UPDATE
+            <include refid="Table_Name"/>
+            <set>
+                <include refid="Update_Colums"/>
+            </set>
+            WHERE id = ${item.id}
+        </foreach>
+    </update>
+
     <update id="update" parameterType="cn.edu.nefu.gdms.model.UserPO">
-        UPDATE <include refid="Table_Name"/> SET
+        UPDATE
+        <include refid="Table_Name"/>
+        SET
         <include refid="Update_Colums"/>
         WHERE id = #{id}
     </update>
 
     <delete id="delete" parameterType="long">
-        DELETE FROM <include refid="Table_Name"/>
+        DELETE FROM
+        <include refid="Table_Name"/>
         WHERE id = #{id}
     </delete>
 
     <select id="get" parameterType="long" resultType="cn.edu.nefu.gdms.model.UserPO">
         SELECT
         <include refid="Select_Columns"/>
-        FROM <include refid="Table_Name"/>
+        FROM
+        <include refid="Table_Name"/>
         WHERE id = #{id}
+    </select>
+
+    <select id="getByIds" parameterType="arraylist" resultType="cn.edu.nefu.gdms.model.UserPO">
+        SELECT
+        <include refid="Select_Columns"/>
+        FROM
+        <include refid="Table_Name"/>
+        WHERE id in #{list}
     </select>
 
     <select id="find" parameterType="string" resultType="cn.edu.nefu.gdms.model.UserPO">
         SELECT
         <include refid="Select_Columns"/>
-        FROM <include refid="Table_Name"/>
+        FROM
+        <include refid="Table_Name"/>
         WHERE username = #{username}
     </select>
 
-    <select id="findByType"  resultType="cn.edu.nefu.gdms.model.UserPO">
+    <select id="findByType" resultType="cn.edu.nefu.gdms.model.UserPO">
         SELECT
         <include refid="Select_Columns"/>
-        FROM <include refid="Table_Name"/>
+        FROM
+        <include refid="Table_Name"/>
         WHERE type_id = #{type}
         <if test="username != null">
             AND username LIKE CONCAT(CONCAT('%', #{username}),'%')
@@ -98,10 +129,11 @@
         limit #{offset},#{size}
     </select>
 
-    <select id="findByTutorId"  resultType="cn.edu.nefu.gdms.model.UserPO">
+    <select id="findByTutorId" resultType="cn.edu.nefu.gdms.model.UserPO">
         SELECT
         <include refid="Select_Columns"/>
-        FROM <include refid="Table_Name"/>
+        FROM
+        <include refid="Table_Name"/>
         WHERE tutor_id = #{tutorId}
         ORDER BY id
     </select>

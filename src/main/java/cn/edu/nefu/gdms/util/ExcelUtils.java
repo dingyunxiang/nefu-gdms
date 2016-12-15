@@ -34,11 +34,11 @@ public class ExcelUtils<T> {
                 T target = (T) type.newInstance();
                 Field[] fields = type.getDeclaredFields();
                 for (Field field : fields) {
-                    field.setAccessible(true);
-                    PropertyDescriptor pd = new PropertyDescriptor(field.getName(), type);
                     if (!paramMap.containsKey(field.getName())) {
                         continue;
                     }
+                    field.setAccessible(true);
+                    PropertyDescriptor pd = new PropertyDescriptor(field.getName(), type);
                     int j = paramMap.get(field.getName());
                     Method getMethod = pd.getWriteMethod();
                     getMethod.invoke(target, afterTransValue(cellArr[i][j], field));

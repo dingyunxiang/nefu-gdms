@@ -3,12 +3,14 @@ package cn.edu.nefu.gdms.biz;
 import cn.edu.nefu.gdms.dao.TopicDao;
 import cn.edu.nefu.gdms.model.TopicPO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * Created by dingyunxiang on 16/12/12.
  */
+@Service
 public class TopicBiz {
     @Autowired
     private TopicDao topicDao;
