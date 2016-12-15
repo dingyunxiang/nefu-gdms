@@ -36,6 +36,10 @@ public class TeacherBiz {
         return 0;
     }
 
+    public TeacherDTO get(long teaId) {
+        return getTeacherDTO(userDao.get(teaId));
+    }
+
     public TeacherDTO getTeacherByStuId(long stuId) {
         UserPO userPO = userDao.get(stuId);
         if (userPO.getTutorId() <= 0) {

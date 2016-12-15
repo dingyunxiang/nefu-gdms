@@ -4,7 +4,6 @@ import cn.edu.nefu.gdms.common.ErrorCodeEnum;
 import cn.edu.nefu.gdms.common.UserTypeEnum;
 import cn.edu.nefu.gdms.dao.UserDao;
 import cn.edu.nefu.gdms.dto.StudentDTO;
-import cn.edu.nefu.gdms.dto.TeacherDTO;
 import cn.edu.nefu.gdms.exception.ServiceException;
 import cn.edu.nefu.gdms.model.TopicPO;
 import cn.edu.nefu.gdms.model.UserPO;
@@ -60,6 +59,10 @@ public class StudentBiz {
         userPO.setCreateTime(System.currentTimeMillis());
         userPO.setUpdateTime(userPO.getCreateTime());
         return userDao.insert(userPO);
+    }
+
+    public StudentDTO get(long id) {
+        return getStudentDTO(userDao.get(id));
     }
 
     public void insertStudentList(List<StudentDTO> studentDTOList) {
