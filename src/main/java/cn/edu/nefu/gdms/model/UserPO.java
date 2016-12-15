@@ -19,4 +19,5 @@ public class UserPO {
     private String name;
     private String classes = "";
     private int title = 0;
+    private int years;
 }

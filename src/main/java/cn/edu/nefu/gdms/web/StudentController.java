@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,4 +42,22 @@ public class StudentController {
         return JsonUtils.toString(request);
     }
 
+    @RequestMapping(value = "/chooseTopic", method = RequestMethod.GET)
+    @ResponseBody
+    public String chooseTopic(@RequestParam("topicId") long topicId,
+                              HttpServletRequest request) throws IOException {
+        long id = Long.valueOf(RequestUtils.getUserNameFromHttpRequest(request));
+
+        Result result = serviceProxy.chooseTopic(id, topicId);
+        return JsonUtils.toString(request);
+    }
+
+    @RequestMapping(value = "/allTopic", method = RequestMethod.GET)
+    @ResponseBody
+    public String allTopic(HttpServletRequest request) throws IOException {
+        long id = Long.valueOf(RequestUtils.getUserNameFromHttpRequest(request));
+
+        Result result = serviceProxy.listAllTopicForStu(id);
+        return JsonUtils.toString(request);
+    }
 }

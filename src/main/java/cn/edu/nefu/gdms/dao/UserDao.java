@@ -29,4 +29,6 @@ public interface UserDao {
     List<UserPO> findByTutorId(long tutorId);
 
     List<UserPO> findByType(@Param("type") int type, @Param("offset") int offset, @Param("size") int size, @Param("username") String username, @Param("name") String name);
+
+    int countFindByType(@Param("type") int type, @Param("username") String username, @Param("name") String name);
 }

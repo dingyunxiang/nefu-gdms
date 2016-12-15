@@ -1,6 +1,7 @@
 package cn.edu.nefu.gdms.biz;
 
 import cn.edu.nefu.gdms.common.ErrorCodeEnum;
+import cn.edu.nefu.gdms.common.TopicStatusEnum;
 import cn.edu.nefu.gdms.common.UserTypeEnum;
 import cn.edu.nefu.gdms.dao.UserDao;
 import cn.edu.nefu.gdms.dto.TeacherDTO;
@@ -11,8 +12,10 @@ import cn.edu.nefu.gdms.util.FileUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +29,7 @@ public class TeacherBiz {
     @Autowired
     private TopicBiz topicBiz;
 
-    public long uploadTopic(TopicPO topicPO, File file) {
+    public long uploadTopic(TopicPO topicPO, MultipartFile file) {
         String filePath = FileUtils.getTeacherFilePath(topicPO.getYears(), topicPO.getTutorId());
         String fileName = file.getName();
         FileUtils.saveFile(filePath, fileName, file);
@@ -35,6 +38,7 @@ public class TeacherBiz {
         topicBiz.insert(topicPO);
         return 0;
     }
+
 
     public TeacherDTO get(long teaId) {
         return getTeacherDTO(userDao.get(teaId));

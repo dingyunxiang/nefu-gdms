@@ -32,4 +32,6 @@ public class UserController {
         result.setError("passwd is error!");
         return result;
     }
+
+
 }

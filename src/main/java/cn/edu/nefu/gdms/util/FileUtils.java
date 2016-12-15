@@ -1,12 +1,9 @@
 package cn.edu.nefu.gdms.util;
 
 
-import cn.edu.nefu.gdms.common.ErrorCodeEnum;
-import cn.edu.nefu.gdms.exception.ServiceException;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.*;
 
 /**
  * Created by dingyunxiang on 16/12/12.
@@ -23,27 +20,26 @@ public class FileUtils {
 
     // 保存文件
     public static void saveFile(String newsRootPath, String filename,
-                                File picFile) {
+                                MultipartFile picFile) {
         try {
             File newsFileRoot = new File(newsRootPath);
             if (!newsFileRoot.exists()) {
                 newsFileRoot.mkdirs();
-            }else{
-                throw new ServiceException(ErrorCodeEnum.FILE_REPEAT);
             }
 
             FileOutputStream fos = new FileOutputStream(newsRootPath + filename);
-            FileInputStream fis = new FileInputStream(picFile);
-            byte[] buf = new byte[1024];
-            int len = 0;
-            while ((len = fis.read(buf)) > 0) {
-                fos.write(buf, 0, len);
-            }
-            if (fis != null)
-                fis.close();
-            if (fos != null)
-                fos.close();
-        } catch (Exception ex) {
+//            FileInputStream fis = new FileInputStream(picFile);
+            picFile.transferTo(new File(newsRootPath + filename));
+//            byte[] buf = new byte[1024];
+//            int len = 0;
+//            while ((len = fis.read(buf)) > 0) {
+//                fos.write(buf, 0, len);
+//            }
+//            if (fis != null)
+//                fis.close();
+//            if (fos != null)
+//                fos.close();
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
@@ -116,4 +112,25 @@ public class FileUtils {
         }
     }
 
+
+    public static byte[] readFileToByteArray(File file) {
+        byte[] buffer = null;
+        try {
+            FileInputStream fis = new FileInputStream(file);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            byte[] b = new byte[1024];
+            int n;
+            while ((n = fis.read(b)) != -1) {
+                bos.write(b, 0, n);
+            }
+            fis.close();
+            bos.close();
+            buffer = bos.toByteArray();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return buffer;
+    }
 }

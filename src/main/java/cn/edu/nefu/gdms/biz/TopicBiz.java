@@ -30,6 +30,10 @@ public class TopicBiz {
         return topicDao.findTopicListByTutorId(tutorId);
     }
 
+    public TopicPO getTopicByStuId(long stuId) {
+        return topicDao.findTopicByStuId(stuId);
+    }
+
     public TopicPO get(long id) {
         return topicDao.get(id);
     }

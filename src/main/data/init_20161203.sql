@@ -11,6 +11,7 @@ CREATE TABLE user (
   email VARCHAR(100) NOT NULL COMMENT '邮箱',
   tutor_id BIGINT NOT NULL COMMENT '导师ID',
   title TINYINT NOT NULL DEFAULT 0 COMMENT '教师职称',
+  years INT NOT NULL DEFAULT 0 COMMENT '毕业时间',
   create_time BIGINT NOT NULL,
   update_time BIGINT NOT NULL,
   PRIMARY KEY (id),
