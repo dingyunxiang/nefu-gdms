@@ -30,7 +30,7 @@ public enum ErrorCodeEnum {
     STU_NOT_TUTOR(30002, "Student not in teacher", "此题目不是你导师的题目"),
     TEA_NUM_NOT_ENOUGH(30003, "teacher is less", "老师数量较少"),
     STU_BE_CHOOSE(30004, "Student has been choose", "该学生已被选择"),
-    TOPIC_BE_CHOOSE(30004, "Topic has been choose", "该题目已被选择");
+    TOPIC_BE_CHOOSE(30005, "Topic has been choose", "该题目已被选择");
 
 
     public int errorCode;
