@@ -1,0 +1,24 @@
+.*
+!.gitignore
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+#package files
+target
+*.xml.bak
+*.iml
+.idea
+pom.properties
+
+#demo file
+AlexDemo.java
+
+.classpath
+.project
+.settings/
+
+diff
