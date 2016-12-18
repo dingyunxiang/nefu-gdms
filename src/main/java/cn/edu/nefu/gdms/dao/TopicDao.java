@@ -12,7 +12,7 @@ public interface TopicDao {
 
     public int update(TopicPO topicPO);
 
-    public int delete(TopicPO topicPO);
+    public int delete(long id);
 
     public List<TopicPO> findTopicListByTutorId(long tutorId);
 

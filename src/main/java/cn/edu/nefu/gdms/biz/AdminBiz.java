@@ -22,11 +22,6 @@ public class AdminBiz {
     @Autowired
     private UserDao userDao;
 
-
-    public void assignTutor(List<Long> tutorIds) {
-
-    }
-
     public void assignTutor(List<Long> stuIds, List<Long> tutorIds) {
         List<Long> randomStuIds = getRandomList(stuIds);
         List<Long> randomTutorIds = getRandomList(tutorIds);
@@ -49,7 +44,6 @@ public class AdminBiz {
         }
         userBiz.updateUserPOs(studentUserPOs);
     }
-
 
     private List<Long> getRandomList(List<Long> idList) {
         HashSet<Long> set = new HashSet<Long>(idList);

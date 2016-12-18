@@ -92,13 +92,11 @@ public class TeacherController {
 
     @RequestMapping(value = "/downloadChooseReport", method = RequestMethod.GET)
     public ResponseEntity<byte[]> downloadChooseReport(@RequestParam("studentId") int stuId) throws IOException {
-        File file = serviceProxy.downChoostReport(stuId);
+        File file = serviceProxy.downChooseReport(stuId);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         headers.setContentDispositionFormData("attachment", file.getName());
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.CREATED);
     }
-
-
 }

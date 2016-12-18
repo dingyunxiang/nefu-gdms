@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 public class LogAspect {
     private static Logger LOGGER = LoggerFactory.getLogger(LogAspect.class);
 
-    @Pointcut("@annotation(cn.edu.nefu.gdms.aop.Log) ")
+    @Pointcut("@annotation(cn.edu.nefu.gdms.aop.Log) || @within(cn.edu.nefu.gdms.aop.Log)")
     public void pointcut() {
     }
 

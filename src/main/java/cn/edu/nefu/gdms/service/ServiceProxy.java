@@ -17,8 +17,8 @@ import java.io.IOException;
 /**
  * Created by dingyunxiang on 16/12/15.
  */
-@Log
 @ErrorHandler
+@Log
 @Service
 public class ServiceProxy {
 
@@ -99,7 +99,7 @@ public class ServiceProxy {
         return result;
     }
 
-    public File downChoostReport(long stuId) {
+    public File downChooseReport(long stuId) {
         return studentBiz.downChooseReport(stuId);
     }
 }
