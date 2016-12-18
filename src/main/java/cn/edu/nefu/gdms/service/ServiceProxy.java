@@ -17,8 +17,8 @@ import java.io.IOException;
 /**
  * Created by dingyunxiang on 16/12/15.
  */
-@ErrorHandler
 @Log
+@ErrorHandler
 @Service
 public class ServiceProxy {
 

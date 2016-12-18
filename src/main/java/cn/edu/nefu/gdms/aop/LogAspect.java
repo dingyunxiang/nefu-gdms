@@ -31,12 +31,15 @@ public class LogAspect {
             LOGGER.info("class: {}, method: {}, params: {}, result: {}, cost: {}ms",
                     proceedingJoinPoint.getTarget().getClass().getName(),
                     proceedingJoinPoint.getSignature().getName(),
+                    proceedingJoinPoint.getArgs(),
+                    result,
                     System.currentTimeMillis() - startTime);
             return result;
         } catch (Exception e) {
             LOGGER.info("class: {}, method: {}, params: {}, exception: {}, cost: {}ms",
                     proceedingJoinPoint.getTarget().getClass().getName(),
                     proceedingJoinPoint.getSignature().getName(),
+                    proceedingJoinPoint.getArgs(),
                     ExceptionUtils.getStackTrace(e),
                     System.currentTimeMillis() - startTime);
             throw e;
