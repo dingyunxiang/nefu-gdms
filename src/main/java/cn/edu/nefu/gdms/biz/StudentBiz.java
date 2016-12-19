@@ -118,7 +118,7 @@ public class StudentBiz {
     }
 
 
-    public List<StudentDTO> getStudentDTOList(int offset, int size, String username, String name) {
+    public List<StudentDTO> getStudents(int offset, int size, String username, String name) {
         return getStudentDTOList(userDao.findByType(UserTypeEnum.STUDENT.getValue(), offset, size, username, name));
     }
 

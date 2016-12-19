@@ -90,6 +90,16 @@ public class TeacherController {
         return JsonUtils.toString(result);
     }
 
+    @RequestMapping(value = "deleteTopic", method = RequestMethod.GET)
+    @ResponseBody
+    public String deleteTopic(@RequestParam("topicId") int topicId,
+                              HttpServletRequest request) throws IOException {
+        long teaId = Long.valueOf(RequestUtils.getUserNameFromHttpRequest(request));
+
+        Result result = serviceProxy.deleteTopic(teaId, topicId);
+        return JsonUtils.toString(result);
+    }
+
     @RequestMapping(value = "/downloadChooseReport", method = RequestMethod.GET)
     public ResponseEntity<byte[]> downloadChooseReport(@RequestParam("studentId") int stuId) throws IOException {
         File file = serviceProxy.downChooseReport(stuId);
@@ -98,5 +108,15 @@ public class TeacherController {
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         headers.setContentDispositionFormData("attachment", file.getName());
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "getAllTeacher", method = RequestMethod.GET)
+    @ResponseBody
+    public String getAllTeacher(@RequestParam("offset") int offset,
+                                @RequestParam("limit") int limit,
+                                @RequestParam("username") String username,
+                                @RequestParam("name") String name) throws IOException {
+        Result result = serviceProxy.getTeachers(offset, limit, username, name);
+        return JsonUtils.toString(result);
     }
 }

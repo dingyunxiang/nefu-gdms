@@ -10,7 +10,7 @@ public interface TimePeriodDao {
 
     public int update(TimePeriod timePeriod);
 
-    public int delete(TimePeriod timePeriod);
+    public int delete(long id);
 
     public TimePeriod get(long id);
 }

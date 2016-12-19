@@ -26,6 +26,10 @@ public class TopicBiz {
         return topicDao.update(topicPO) > 0;
     }
 
+    public boolean delete(long topicId) {
+        return topicDao.delete(topicId) > 0;
+    }
+
     public List<TopicPO> getTopicsByTeaId(long tutorId) {
         return topicDao.findTopicListByTutorId(tutorId);
     }

@@ -1,9 +1,9 @@
 package cn.edu.nefu.gdms.biz;
 
 import cn.edu.nefu.gdms.common.ErrorCodeEnum;
-import cn.edu.nefu.gdms.common.TopicStatusEnum;
 import cn.edu.nefu.gdms.common.UserTypeEnum;
 import cn.edu.nefu.gdms.dao.UserDao;
+import cn.edu.nefu.gdms.dto.StudentDTO;
 import cn.edu.nefu.gdms.dto.TeacherDTO;
 import cn.edu.nefu.gdms.exception.ServiceException;
 import cn.edu.nefu.gdms.model.TopicPO;
@@ -12,10 +12,8 @@ import cn.edu.nefu.gdms.util.FileUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +37,26 @@ public class TeacherBiz {
         return 0;
     }
 
+    public boolean deleteTopic(long tutorId, long topicId) {
+        TopicPO topicPO = topicBiz.get(topicId);
+        if (topicPO.getTutorId() != tutorId) {
+            throw new ServiceException(ErrorCodeEnum.TOPIC_NOT_TUTOR);
+        }
+        return topicBiz.delete(topicId);
+    }
+
+    public List<TeacherDTO> getTeachers(int offset, int size, String username, String name) {
+        return getTeacherDTOList(userDao.findByType(UserTypeEnum.TEACHER.getValue(), offset, size, username, name));
+    }
+
+    private List<TeacherDTO> getTeacherDTOList(List<UserPO> userPOList) {
+        List<TeacherDTO> list = new ArrayList<TeacherDTO>(userPOList.size());
+
+        for (UserPO userPO : userPOList) {
+            list.add(getTeacherDTO(userPO));
+        }
+        return list;
+    }
 
     public TeacherDTO get(long teaId) {
         return getTeacherDTO(userDao.get(teaId));

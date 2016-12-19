@@ -4,8 +4,12 @@ import cn.edu.nefu.gdms.aop.ErrorHandler;
 import cn.edu.nefu.gdms.aop.Log;
 import cn.edu.nefu.gdms.biz.StudentBiz;
 import cn.edu.nefu.gdms.biz.TeacherBiz;
+import cn.edu.nefu.gdms.biz.TimePeriodBiz;
 import cn.edu.nefu.gdms.dto.QueryResult;
 import cn.edu.nefu.gdms.dto.Result;
+import cn.edu.nefu.gdms.dto.StudentDTO;
+import cn.edu.nefu.gdms.dto.TeacherDTO;
+import cn.edu.nefu.gdms.model.TimePeriod;
 import cn.edu.nefu.gdms.util.ResultUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,9 +28,10 @@ public class ServiceProxy {
 
     @Autowired
     private StudentBiz studentBiz;
-
     @Autowired
     private TeacherBiz teacherBiz;
+    @Autowired
+    private TimePeriodBiz timePeriodBiz;
 
     public Result getTutorByStuId(long stuId) {
         Result result = ResultUtils.getSuccessResult();
@@ -54,7 +59,14 @@ public class ServiceProxy {
 
     public Result getStudents(int offset, int limit, String username, String name) {
         Result result = ResultUtils.getSuccessResult();
-        QueryResult queryResult = transToQueryResult(offset, limit, studentBiz.getStudentDTOList(offset, limit, username, name), studentBiz.getStudentDTOListSize(username, name));
+        QueryResult queryResult = transToQueryResult(offset, limit, studentBiz.getStudents(offset, limit, username, name), studentBiz.getStudentDTOListSize(username, name));
+        result.setData(queryResult);
+        return result;
+    }
+
+    public Result getTeachers(int offset, int limit, String username, String name) {
+        Result result = ResultUtils.getSuccessResult();
+        QueryResult queryResult = transToQueryResult(offset, limit, teacherBiz.getTeachers(offset, limit, username, name), studentBiz.getStudentDTOListSize(username, name));
         result.setData(queryResult);
         return result;
     }
@@ -93,6 +105,12 @@ public class ServiceProxy {
         return result;
     }
 
+    public Result deleteTopic(long tutorId, long topicId) {
+        Result result = ResultUtils.getSuccessResult();
+        teacherBiz.deleteTopic(tutorId, topicId);
+        return result;
+    }
+
     public Result listAllTopicForStu(long stuId) {
         Result result = ResultUtils.getSuccessResult();
         result.setData(studentBiz.listTopics(stuId));
@@ -101,5 +119,23 @@ public class ServiceProxy {
 
     public File downChooseReport(long stuId) {
         return studentBiz.downChooseReport(stuId);
+    }
+
+    public Result addStudent(StudentDTO studentDTO) {
+        Result result = ResultUtils.getSuccessResult();
+        result.setData(studentBiz.insertStudent(studentDTO));
+        return result;
+    }
+
+    public Result addTeacher(TeacherDTO teacherDTO) {
+        Result result = ResultUtils.getSuccessResult();
+        result.setData(teacherBiz.insertTeacher(teacherDTO));
+        return result;
+    }
+
+    public Result addTimePeriod(TimePeriod timePeriod) {
+        Result result = ResultUtils.getSuccessResult();
+        result.setData(timePeriodBiz.insertTimePeriod(timePeriod));
+        return result;
     }
 }
