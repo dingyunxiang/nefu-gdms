@@ -10,6 +10,7 @@ import cn.edu.nefu.gdms.dto.Result;
 import cn.edu.nefu.gdms.dto.StudentDTO;
 import cn.edu.nefu.gdms.dto.TeacherDTO;
 import cn.edu.nefu.gdms.model.TimePeriod;
+import cn.edu.nefu.gdms.util.ParamsChecker;
 import cn.edu.nefu.gdms.util.ResultUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -134,6 +135,8 @@ public class ServiceProxy {
     }
 
     public Result addTimePeriod(TimePeriod timePeriod) {
+        ParamsChecker.check(timePeriod);
+
         Result result = ResultUtils.getSuccessResult();
         result.setData(timePeriodBiz.insertTimePeriod(timePeriod));
         return result;
