@@ -37,6 +37,10 @@ public class TeacherBiz {
         return 0;
     }
 
+    public List<TopicPO> getTopicsByTeaId(long tutorId){
+        return topicBiz.getTopicsByTeaId(tutorId);
+    }
+
     public boolean deleteTopic(long tutorId, long topicId) {
         TopicPO topicPO = topicBiz.get(topicId);
         if (topicPO.getTutorId() != tutorId) {

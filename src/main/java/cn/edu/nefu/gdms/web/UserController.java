@@ -20,18 +20,18 @@ public class UserController {
     @Autowired
     private UserBiz userBiz;
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    @ResponseBody
-    public Result login(@RequestParam("username") String username,
-                        @RequestParam("password") String password) {
-        Result result = new Result();
-        if (userBiz.login(username, password)) {
-            return ResultUtils.getSuccessResult();
-        }
-        result.setSuccess(false);
-        result.setError("passwd is error!");
-        return result;
-    }
+//    @RequestMapping(value = "/login", method = RequestMethod.GET)
+//    @ResponseBody
+//    public Result login(@RequestParam("username") String username,
+//                        @RequestParam("password") String password) {
+//        Result result = new Result();
+//        if (userBiz.login(username, password)) {
+//            return ResultUtils.getSuccessResult();
+//        }
+//        result.setSuccess(false);
+//        result.setError("passwd is error!");
+//        return result;
+//    }
 
 
 }
