@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:sec="http://www.springframework.org/schema/security"
+       xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/security
+       http://www.springframework.org/schema/security/spring-security.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="cn.edu.nefu.gdms.oauth">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <sec:http pattern="/**/**.js" security="none"/>
+    <sec:http pattern="/**/**.png" security="none"/>
+    <sec:http pattern="/**/**.css" security="none"/>
+    <sec:http pattern="/userInfo/login" security="none"/>
+
+    <sec:http>
+        <!--
+          login-page:登陆页面，即返回到登陆jsp的页面url
+          login-processing-url:登陆逻辑处理url，这里只需要定义一个url即可，登陆逻辑不需要写，因为已经交给spring-security自动处理了
+          default-target-url:登陆成功后跳转的页面
+          authentication-failure-url:登陆失败后跳转的页面
+          username-parameter:登陆form的用户名input的name属性
+          password-parameter:登陆form的密码input的password属性
+        -->
+        <sec:form-login login-page="/admin/loginInit.do"
+                        login-processing-url="/admin/login"
+                        default-target-url="/admin/index"
+                        authentication-failure-url="/admin/loginInit.do?authError=true"
+                        username-parameter="name"
+                        password-parameter="password"/>
+        <!--退出登陆url，这里只需要定义一个url即可，退出登陆逻辑不需要写，因为已经交给spring-security自动处理了-->
+        <sec:logout logout-url="/admin/logout"/>
+        <!--没有权限时返回的页面-->
+        <sec:access-denied-handler error-page="/WEB-INF/index.jsp"></sec:access-denied-handler>
+        <!--session过期后，访问其他资源时跳转到登陆页面-->
+        <sec:session-management invalid-session-url="/admin/login"/>
+        <!--自定义过滤器，为spring-security提供用户名、密码、权限等信息，有了这些信息，spring-security才能自动去处理登陆及权限的逻辑-->
+        <sec:custom-filter ref="FilterSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR"/>
+        <!--禁用csrf，否则需要在登陆form配置csrf字段-->
+        <sec:csrf disabled="true"/>
+    </sec:http>
+
+    <!--身份认证管理器-->
+    <sec:authentication-manager alias="authenticationManager">
+        <!--自定义身份认证管理器-->
+        <sec:authentication-provider user-service-ref="CustomUserDetailsService"/>
+    </sec:authentication-manager>
+
+    <!--自定义过滤器，为spring-security提供用户名、密码、权限等信息，有了这些信息，spring-security才能自动去处理登陆及权限的逻辑-->
+    <bean id="FilterSecurityInterceptor"
+          class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
+        <!--自定义权限决定器，根据用户是否拥有某资源的权限，从而决定是否让用户访问某资源-->
+        <property name="accessDecisionManager" ref="CustomAccessDecisionManager"/>
+        <!--自定义身份认证管理器-->
+        <property name="authenticationManager" ref="authenticationManager"/>
+        <!--自定义权限信息数据源-->
+        <property name="securityMetadataSource" ref="CustomFilterInvocationSecurityMetadataSource"/>
+    </bean>
+</beans>

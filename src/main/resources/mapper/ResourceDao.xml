@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.nefu.gdms.dao.ResourceDao">
+    <sql id="Table_Name">
+        resource
+    </sql>
+
+    <sql id="Insert_Columns">
+        url
+    </sql>
+
+    <sql id="Insert_Values">
+        #{url}
+    </sql>
+
+    <sql id="Select_Columns">
+        id,
+        <include refid="Insert_Columns"/>
+    </sql>
+
+    <sql id="Update_Colums">
+        name=#{url}
+    </sql>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="cn.edu.nefu.gdms.model.ResourcePO">
+        INSERT INTO
+        <include refid="Table_Name"/>
+        (<include refid="Insert_Columns"/>)
+        VALUES
+        (<include refid="Insert_Values"/>)
+    </insert>
+
+    <update id="update" parameterType="cn.edu.nefu.gdms.model.ResourcePO">
+        UPDATE
+        <include refid="Table_Name"/>
+        SET
+        <include refid="Update_Colums"/>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="long">
+        DELETE FROM
+        <include refid="Table_Name"/>
+        WHERE id = #{id}
+    </delete>
+
+    <select id="get" parameterType="long" resultType="cn.edu.nefu.gdms.model.ResourcePO">
+        SELECT
+        <include refid="Select_Columns"/>
+        FROM
+        <include refid="Table_Name"/>
+        WHERE id = #{id}
+    </select>
+
+    <select id="find" resultType="cn.edu.nefu.gdms.model.ResourcePO">
+        SELECT
+        <include refid="Select_Columns"/>
+        FROM
+        <include refid="Table_Name"/>
+        WHERE url = #{url}
+    </select>
+
+    <select id="getRolesByResId" resultType="cn.edu.nefu.gdms.model.RolePO">
+        SELECT r.id,r.name FROM role r, role_resource rr
+        WHERE r.id = rr.role_id
+        AND rr.resource_id = #{resourceId}
+    </select>
+
+
+</mapper>
+
+
+

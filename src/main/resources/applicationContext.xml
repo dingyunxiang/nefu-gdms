@@ -99,38 +99,9 @@
         注意use-expressions=true.表示开启表达式,否则表达式将不可用. see:http://www.family168.com/tutorial/springsec3/html/el-access.html
     -->
 
-    <!-- security="none"  不过滤这些资源-->
-    <sec:http pattern="/js/*" security="none"/>
-    <sec:http pattern="/lonin.jsp" security="none"/>
 
-    <sec:http create-session="stateless" entry-point-ref="digestEntryPoint">
-        <sec:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
-
-        <sec:http-basic />
-        <sec:custom-filter ref="digestFilter" after="BASIC_AUTH_FILTER" />
-    </sec:http>
-
-    <bean id="digestFilter" class=
-            "org.springframework.security.web.authentication.www.DigestAuthenticationFilter">
-        <property name="userDetailsService" ref="userService" />
-        <property name="authenticationEntryPoint" ref="digestEntryPoint" />
-    </bean>
-
-
-
-    <bean id="digestEntryPoint" class=
-            "org.springframework.security.web.authentication.www.DigestAuthenticationEntryPoint">
-        <property name="realmName" value="Contacts Realm via Digest Authentication"/>
-        <property name="key" value="acegi" />
-    </bean>
-
-    <sec:authentication-manager alias="authenticationManager">
-        <sec:authentication-provider user-service-ref="userService">
-            <!--<security:password-encoder hash="md5"/>-->
-        </sec:authentication-provider>
-    </sec:authentication-manager>
-
-    <bean id ="userService" class="cn.edu.nefu.gdms.biz.UserBiz"/>
-
+    <!--spring security end-->
 </beans>
+
+
 
