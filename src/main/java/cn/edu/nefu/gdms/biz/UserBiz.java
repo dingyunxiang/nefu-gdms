@@ -26,6 +26,14 @@ public class UserBiz {
         return false;
     }
 
+    public UserPO get(long id) {
+        return userDao.get(id);
+    }
+
+    public UserPO get(String username) {
+        return userDao.find(username);
+    }
+
     public boolean updatePasswd(long id, String password) {
         UserPO userPO = userDao.get(id);
 

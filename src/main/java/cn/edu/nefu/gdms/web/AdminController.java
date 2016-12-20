@@ -7,11 +7,9 @@ import cn.edu.nefu.gdms.model.TimePeriod;
 import cn.edu.nefu.gdms.service.ServiceProxy;
 import cn.edu.nefu.gdms.util.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
@@ -42,6 +40,16 @@ public class AdminController {
     @ResponseBody
     public String addStudent(@RequestBody TimePeriod timePeriod) throws IOException {
         Result result = serviceProxy.addTimePeriod(timePeriod);
+        return JsonUtils.toString(result);
+    }
+
+    @RequestMapping(value = "/getAllTeachers", method = RequestMethod.GET)
+    @ResponseBody
+    public String getAllTeacher(@RequestParam("offset") int offset,
+                                @RequestParam("limit") int limit,
+                                @RequestParam("username") String username,
+                                @RequestParam("name") String name) throws IOException {
+        Result result = serviceProxy.getTeachers(offset, limit, username, name);
         return JsonUtils.toString(result);
     }
 

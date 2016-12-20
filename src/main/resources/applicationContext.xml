@@ -103,50 +103,34 @@
     <sec:http pattern="/js/*" security="none"/>
     <sec:http pattern="/lonin.jsp" security="none"/>
 
-    <sec:http auto-config="true" use-expressions="true">
-        <!--允许所有人访问-->
-        <!--允许ROLE_ADMIN权限访问-->
-        <sec:intercept-url pattern="/user/findAll.html" access="hasAnyRole('ROLE_USER')"/>
-        <!--允许ROLE_ADMIN权限访问-->
-        <!--允许ROLE_USER权限访问-->
-        <sec:intercept-url pattern="/success.jsp" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')"/>
-        <!--允许IS_AUTHENTICATED_ANONYMOUSLY匿名访问-->
-        <sec:intercept-url pattern="/anonymously.jsp" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+    <sec:http create-session="stateless" entry-point-ref="digestEntryPoint">
+        <sec:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
 
-
-
-        <!-- login-page:默认指定的登录页面. authentication-failure-url:出错后跳转页面. default-target-url:成功登陆后跳转页面 -->
-        <sec:form-login login-page="/index.jsp" authentication-failure-url="/user/login_failure.html"
-                        default-target-url="/success.jsp"/>
-        <!--
-            invalidate-session：指定在退出系统时是否要销毁Session。logout-success-url：退出系统后转向的URL。logout-url：指定了用于响应退出系统请求的URL。其默认值为：/j_spring_sec_logout。
-        -->
-        <sec:logout invalidate-session="true" logout-success-url="/index.jsp"
-                    logout-url="/j_spring_sec_logout"/>
-        <!--
-            max-sessions:允许用户帐号登录的次数。范例限制用户只能登录一次。exception-if-maximum-exceeded:
-            默认为false，此值表示：用户第二次登录时，前一次的登录信息都被清空。当exception-if-maximum-exceeded="true"时系统会拒绝第二次登录。
-        -->
-
-        <sec:session-management>
-            <sec:concurrency-control error-if-maximum-exceeded="true" max-sessions="1"/>
-        </sec:session-management>
-
+        <sec:http-basic />
+        <sec:custom-filter ref="digestFilter" after="BASIC_AUTH_FILTER" />
     </sec:http>
 
-        <!-- 指定一个自定义的authentication-manager :customUserDetailsService -->
+    <bean id="digestFilter" class=
+            "org.springframework.security.web.authentication.www.DigestAuthenticationFilter">
+        <property name="userDetailsService" ref="userService" />
+        <property name="authenticationEntryPoint" ref="digestEntryPoint" />
+    </bean>
 
-    <sec:authentication-manager>
-        <sec:authentication-provider>
-            <sec:jdbc-user-service data-source-ref="dataSource" />
+
+
+    <bean id="digestEntryPoint" class=
+            "org.springframework.security.web.authentication.www.DigestAuthenticationEntryPoint">
+        <property name="realmName" value="Contacts Realm via Digest Authentication"/>
+        <property name="key" value="acegi" />
+    </bean>
+
+    <sec:authentication-manager alias="authenticationManager">
+        <sec:authentication-provider user-service-ref="userService">
+            <!--<security:password-encoder hash="md5"/>-->
         </sec:authentication-provider>
     </sec:authentication-manager>
-    <!-- 对密码进行MD5编码 -->
 
-    <!--
-        通过 customUserDetailsService,Spring会控制用户的访问级别.
-        也可以理解成:以后我们和数据库操作就是通过customUserDetailsService来进行关联.
-     -->
+    <bean id ="userService" class="cn.edu.nefu.gdms.biz.UserBiz"/>
 
 </beans>
 

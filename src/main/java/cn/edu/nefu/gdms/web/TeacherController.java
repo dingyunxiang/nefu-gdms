@@ -10,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -110,7 +111,7 @@ public class TeacherController {
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "getAllTeacher", method = RequestMethod.GET)
+    @RequestMapping(value = "getAllTeachers", method = RequestMethod.GET)
     @ResponseBody
     public String getAllTeacher(@RequestParam("offset") int offset,
                                 @RequestParam("limit") int limit,
