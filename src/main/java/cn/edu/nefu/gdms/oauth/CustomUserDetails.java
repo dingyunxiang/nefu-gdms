@@ -3,12 +3,9 @@ package cn.edu.nefu.gdms.oauth;
 import cn.edu.nefu.gdms.biz.OauthBiz;
 import cn.edu.nefu.gdms.model.RolePO;
 import cn.edu.nefu.gdms.model.UserPO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,7 +20,7 @@ public class CustomUserDetails implements UserDetails {
     //用户所拥有的权限
     private Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 
-    public CustomUserDetails(UserPO userPO,OauthBiz oauthBiz) {
+    public CustomUserDetails(UserPO userPO, OauthBiz oauthBiz) {
         this.userPO = userPO;
         this.oauthBiz = oauthBiz;
         for (RolePO r : oauthBiz.getRolesByUserId(userPO.getId())) {

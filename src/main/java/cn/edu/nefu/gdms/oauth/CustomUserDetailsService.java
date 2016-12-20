@@ -5,19 +5,24 @@ import cn.edu.nefu.gdms.biz.UserBiz;
 import cn.edu.nefu.gdms.model.UserPO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.provider.ClientDetailsService;
+import org.springframework.security.oauth2.provider.client.ClientDetailsUserDetailsService;
 import org.springframework.stereotype.Service;
 
 /**
  * Created by dingyunxiang on 16/12/20.
  */
 @Service("CustomUserDetailsService")
-public class CustomUserDetailsService implements UserDetailsService {
+public class CustomUserDetailsService extends ClientDetailsUserDetailsService {
     @Autowired
     private UserBiz userBiz;
     @Autowired
     private OauthBiz oauthBiz;
+
+    public CustomUserDetailsService(ClientDetailsService clientDetailsService) {
+        super(clientDetailsService);
+    }
 
     /**
      * 根据用户名查找用户信息，如果查找不到，抛出UsernameNotFoundException
@@ -32,6 +37,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (userPO == null) {
             throw new UsernameNotFoundException(String.format("username:%s not found!", s));
         }
-        return new CustomUserDetails(userPO,oauthBiz);
+        return new CustomUserDetails(userPO, oauthBiz);
     }
 }

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:sec="http://www.springframework.org/schema/security"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsdhttp://www.springframework.org/schema/security">
+
+    <import resource="classpath:applicationContext.xml"/>
+
+    <!--4.spring sec配置-->
+    <sec:http pattern="/**/**.js" security="none"/>
+    <sec:http pattern="/**/**.png" security="none"/>
+    <sec:http pattern="/**/**.css" security="none"/>
+
+    <sec:http>
+        <!--
+          login-page:登陆页面，即返回到登陆jsp的页面url
+          login-processing-url:登陆逻辑处理url，这里只需要定义一个url即可，登陆逻辑不需要写，因为已经交给spring-security自动处理了
+          default-target-url:登陆成功后跳转的页面
+          authentication-failure-url:登陆失败后跳转的页面
+          username-parameter:登陆form的用户名input的name属性
+          password-parameter:登陆form的密码input的password属性
+        -->
+        <sec:form-login login-processing-url="/user/login"
+                        default-target-url="/Success.jsp"
+                        authentication-failure-url="/fail.jsp"
+                        username-parameter="name"
+                        password-parameter="password"/>
+        <!--退出登陆url，这里只需要定义一个url即可，退出登陆逻辑不需要写，因为已经交给spring-security自动处理了-->
+        <sec:logout logout-url="/user/logout"/>
+        <!--没有权限时返回的页面-->
+        <sec:access-denied-handler error-page="/index.jsp"></sec:access-denied-handler>
+        <!--session过期后，访问其他资源时跳转到登陆页面-->
+        <sec:session-management invalid-session-url="/index.jsp"/>
+        <!--自定义过滤器，为spring-security提供用户名、密码、权限等信息，有了这些信息，spring-security才能自动去处理登陆及权限的逻辑-->
+        <sec:custom-filter ref="FilterSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR"/>
+        <!--禁用csrf，否则需要在登陆form配置csrf字段-->
+        <sec:csrf disabled="true"/>
+    </sec:http>
+
+    <!--身份认证管理器-->
+    <!--<sec:authentication-manager alias="authenticationManager">-->
+    <!--&lt;!&ndash;自定义身份认证管理器&ndash;&gt;-->
+    <!--<sec:authentication-provider user-service-ref="CustomUserDetailsService"/>-->
+    <!--</sec:authentication-manager>-->
+
+    <!--自定义过滤器，为spring-security提供用户名、密码、权限等信息，有了这些信息，spring-security才能自动去处理登陆及权限的逻辑-->
+    <bean id="FilterSecurityInterceptor"
+          class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
+        <!--自定义权限决定器，根据用户是否拥有某资源的权限，从而决定是否让用户访问某资源-->
+        <property name="accessDecisionManager" ref="CustomAccessDecisionManager"/>
+        <!--自定义身份认证管理器-->
+        <property name="authenticationManager" ref="oauth2AuthenticationManager"/>
+        <!--自定义权限信息数据源-->
+        <property name="securityMetadataSource" ref="CustomFilterInvocationSecurityMetadataSource"/>
+    </bean>
+
+    <bean id="tokenStore" class="org.springframework.security.oauth2.provider.token.JdbcTokenStore">
+        <constructor-arg index="0" ref="dataSource"/>
+    </bean>
+
+    <bean id="tokenServices" class="org.springframework.security.oauth2.provider.token.DefaultTokenServices">
+        <property name="tokenStore" ref="tokenStore"/>
+        <property name="supportRefreshToken" value="true"/>
+    </bean>
+
+    <bean id="clientDetailsService" class="org.springframework.security.oauth2.provider.JdbcClientDetailsService">
+        <constructor-arg index="0" ref="dataSource"/>
+    </bean>
+
+    <bean id="oauth2ClientDetailsUserService"
+          class="cn.edu.nefu.gdms.oauth.CustomUserDetailsService">
+        <constructor-arg ref="clientDetailsService"/>
+    </bean>
+
+    <bean id="oauth2AuthenticationEntryPoint"
+          class="org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEntryPoint"/>
+
+    <sec:authentication-manager id="oauth2AuthenticationManager">
+        <sec:authentication-provider user-service-ref="oauth2ClientDetailsUserService"/>
+    </sec:authentication-manager>
+
+    <sec:authentication-manager alias="authenticationManager">
+        <sec:authentication-provider user-service-ref="CustomUserDetailsService">
+            <sec:password-encoder hash="md5"/>
+        </sec:authentication-provider>
+    </sec:authentication-manager>
+
+    <bean id="oauth2AccessDeniedHandler"
+          class="org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler"/>
+
+    <bean id="oauthUserApprovalHandler"
+          class="org.springframework.security.oauth2.provider.approval.DefaultUserApprovalHandler"/>
+
+    <authorization-server client-details-service-ref="clientDetailsService" token-services-ref="tokenServices"
+                              user-approval-handler-ref="oauthUserApprovalHandler">
+        <authorization-code/>
+        <implicit/>
+        <refresh-token/>
+        <client-credentials/>
+        <password/>
+    </authorization-server>
+</beans>
