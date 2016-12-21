@@ -3,5 +3,8 @@
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/src/main/data/add_20161220_addPrivileges.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/data/init_20161203.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/data/initial_data.ddl" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/data/initial_db.ddl" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/data/oauth.ddl" dialect="MySQL" />
   </component>
 </project>

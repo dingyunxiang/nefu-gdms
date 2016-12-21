@@ -1,7 +1,6 @@
 package cn.edu.nefu.gdms.dao;
 
 import cn.edu.nefu.gdms.model.UserPO;
-import junit.framework.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,7 @@ import java.util.List;
 public class UserDaoTest {
     @Test
     public void findByType() throws Exception {
-        List<UserPO> list = userDao.findByType(0,0,10,"42",null);
+        List<UserPO> list = userDao.findByType(0, 0, 10, "42", null);
         System.out.println(list.size());
     }
 
@@ -27,14 +26,14 @@ public class UserDaoTest {
     private UserDao userDao;
 
     @Test
-    public void testInsert(){
+    public void testInsert() {
         UserPO userPO = TestDataHelper.getUser();
         long rs = userDao.insert(userPO);
         System.out.println(userPO.getId());
     }
 
     @Test
-    public void testGet(){
+    public void testGet() {
         UserPO get = userDao.get(20134270);
         UserPO find = userDao.find("20134269");
         get.setUsername("updateName");
@@ -44,12 +43,12 @@ public class UserDaoTest {
     }
 
     @Test
-    public void testDelete(){
+    public void testDelete() {
         System.out.println(userDao.delete(20134269));
     }
 
     @Test
-    public void testInsertList(){
+    public void testInsertList() {
         List<UserPO> list = new ArrayList<UserPO>();
         list.add(TestDataHelper.getUser());
         list.add(TestDataHelper.getUser());

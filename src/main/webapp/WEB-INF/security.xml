@@ -1,103 +1,249 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:sec="http://www.springframework.org/schema/security"
-       xmlns="http://www.springframework.org/schema/beans"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans.xsdhttp://www.springframework.org/schema/security">
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:oauth2="http://www.springframework.org/schema/security/oauth2"
+             xmlns:mvc="http://www.springframework.org/schema/mvc"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                        http://www.springframework.org/schema/security
+                        http://www.springframework.org/schema/security/spring-security-4.0.xsd http://www.springframework.org/schema/security/oauth2 http://www.springframework.org/schema/security/spring-security-oauth2-2.0.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 
-    <import resource="classpath:applicationContext.xml"/>
+    <beans:import resource="classpath:applicationContext.xml"/>
 
-    <!--4.spring sec配置-->
-    <sec:http pattern="/**/**.js" security="none"/>
-    <sec:http pattern="/**/**.png" security="none"/>
-    <sec:http pattern="/**/**.css" security="none"/>
+    <!--
+     Spring Security + OAuth 的主配置文件
+    -->
 
-    <sec:http>
-        <!--
-          login-page:登陆页面，即返回到登陆jsp的页面url
-          login-processing-url:登陆逻辑处理url，这里只需要定义一个url即可，登陆逻辑不需要写，因为已经交给spring-security自动处理了
-          default-target-url:登陆成功后跳转的页面
-          authentication-failure-url:登陆失败后跳转的页面
-          username-parameter:登陆form的用户名input的name属性
-          password-parameter:登陆form的密码input的password属性
-        -->
-        <sec:form-login login-processing-url="/user/login"
-                        default-target-url="/Success.jsp"
-                        authentication-failure-url="/fail.jsp"
-                        username-parameter="name"
-                        password-parameter="password"/>
-        <!--退出登陆url，这里只需要定义一个url即可，退出登陆逻辑不需要写，因为已经交给spring-security自动处理了-->
-        <sec:logout logout-url="/user/logout"/>
-        <!--没有权限时返回的页面-->
-        <sec:access-denied-handler error-page="/index.jsp"></sec:access-denied-handler>
-        <!--session过期后，访问其他资源时跳转到登陆页面-->
-        <sec:session-management invalid-session-url="/index.jsp"/>
-        <!--自定义过滤器，为spring-security提供用户名、密码、权限等信息，有了这些信息，spring-security才能自动去处理登陆及权限的逻辑-->
-        <sec:custom-filter ref="FilterSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR"/>
-        <!--禁用csrf，否则需要在登陆form配置csrf字段-->
-        <sec:csrf disabled="true"/>
-    </sec:http>
+    <!-- 若需要调试, 可将debug 标签注释取消 -->
+    <!--<debug/>-->
 
-    <!--身份认证管理器-->
-    <!--<sec:authentication-manager alias="authenticationManager">-->
-    <!--&lt;!&ndash;自定义身份认证管理器&ndash;&gt;-->
-    <!--<sec:authentication-provider user-service-ref="CustomUserDetailsService"/>-->
-    <!--</sec:authentication-manager>-->
+    <!--  静态资源, 忽略 -->
+    <!--static url pattern-->
+    <http pattern="/resources/**" security="none"/>
+    <http pattern="/oauth/rest_token" security="none"/>
 
-    <!--自定义过滤器，为spring-security提供用户名、密码、权限等信息，有了这些信息，spring-security才能自动去处理登陆及权限的逻辑-->
-    <bean id="FilterSecurityInterceptor"
-          class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
-        <!--自定义权限决定器，根据用户是否拥有某资源的权限，从而决定是否让用户访问某资源-->
-        <property name="accessDecisionManager" ref="CustomAccessDecisionManager"/>
-        <!--自定义身份认证管理器-->
-        <property name="authenticationManager" ref="oauth2AuthenticationManager"/>
-        <!--自定义权限信息数据源-->
-        <property name="securityMetadataSource" ref="CustomFilterInvocationSecurityMetadataSource"/>
-    </bean>
 
-    <bean id="tokenStore" class="org.springframework.security.oauth2.provider.token.JdbcTokenStore">
-        <constructor-arg index="0" ref="dataSource"/>
-    </bean>
+    <!--
+    Oauth server start.............
+    https://github.com/spring-projects/spring-security-oauth/blob/master/docs/oauth2.md
+    -->
 
-    <bean id="tokenServices" class="org.springframework.security.oauth2.provider.token.DefaultTokenServices">
-        <property name="tokenStore" ref="tokenStore"/>
-        <property name="supportRefreshToken" value="true"/>
-    </bean>
+    <!--
+        Spring MVC的注解配置, 注意: 该配置不能放置在 mkk-servlet.xml 文件中
+    -->
+    <mvc:annotation-driven/>
+    <mvc:default-servlet-handler/>
 
-    <bean id="clientDetailsService" class="org.springframework.security.oauth2.provider.JdbcClientDetailsService">
-        <constructor-arg index="0" ref="dataSource"/>
-    </bean>
+    <!--
+     OAuth2 URL: /oauth/token   的处理与配置
+     一般使用时这里不需要修改, 直接使用即可
+    -->
+    <http pattern="/oauth/token" create-session="stateless" authentication-manager-ref="oauth2AuthenticationManager"
+          entry-point-ref="oauth2AuthenticationEntryPoint" use-expressions="false">
+        <intercept-url pattern="/oauth/token" access="IS_AUTHENTICATED_FULLY"/>
+        <anonymous enabled="false"/>
+        <http-basic entry-point-ref="oauth2AuthenticationEntryPoint"/>
 
-    <bean id="oauth2ClientDetailsUserService"
-          class="cn.edu.nefu.gdms.oauth.CustomUserDetailsService">
-        <constructor-arg ref="clientDetailsService"/>
-    </bean>
+        <custom-filter ref="clientCredentialsTokenEndpointFilter" before="BASIC_AUTH_FILTER"/>
+        <access-denied-handler ref="oauth2AccessDeniedHandler"/>
+        <csrf disabled="true"/>
+    </http>
 
-    <bean id="oauth2AuthenticationEntryPoint"
-          class="org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEntryPoint"/>
+    <!--
+        处理grant_type=client_credentials 的逻辑
+        只从请求中获取client_id与client_secret
+    -->
+    <beans:bean id="clientCredentialsTokenEndpointFilter"
+                class="org.springframework.security.oauth2.provider.client.ClientCredentialsTokenEndpointFilter">
+        <beans:property name="authenticationManager" ref="oauth2AuthenticationManager"/>
+    </beans:bean>
 
-    <sec:authentication-manager id="oauth2AuthenticationManager">
-        <sec:authentication-provider user-service-ref="oauth2ClientDetailsUserService"/>
-    </sec:authentication-manager>
 
-    <sec:authentication-manager alias="authenticationManager">
-        <sec:authentication-provider user-service-ref="CustomUserDetailsService">
-            <sec:password-encoder hash="md5"/>
-        </sec:authentication-provider>
-    </sec:authentication-manager>
+    <!--
+        对具体的资源(resource)的安全配置逻辑, 包括ROLE, Scope等
+        可根据具体的需求添加, 每一类URL pattern 对应具体的resource
+        /unity/**  处理资源 unityResourceServer
+        /m/**  处理资源 mobileResourceServer
+    -->
+    <!--unity http configuration-->
+    <http pattern="/unity/**" create-session="never" entry-point-ref="oauth2AuthenticationEntryPoint"
+          access-decision-manager-ref="oauth2AccessDecisionManager" use-expressions="false">
+        <anonymous enabled="false"/>
 
-    <bean id="oauth2AccessDeniedHandler"
-          class="org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler"/>
+        <intercept-url pattern="/unity/**" access="ROLE_UNITY,SCOPE_READ"/>
 
-    <bean id="oauthUserApprovalHandler"
-          class="org.springframework.security.oauth2.provider.approval.DefaultUserApprovalHandler"/>
+        <custom-filter ref="unityResourceServer" before="PRE_AUTH_FILTER"/>
+        <access-denied-handler ref="oauth2AccessDeniedHandler"/>
+        <csrf disabled="true"/>
+    </http>
 
-    <authorization-server client-details-service-ref="clientDetailsService" token-services-ref="tokenServices"
-                              user-approval-handler-ref="oauthUserApprovalHandler">
-        <authorization-code/>
-        <implicit/>
-        <refresh-token/>
-        <client-credentials/>
-        <password/>
-    </authorization-server>
-</beans>
+    <!--mobile http configuration-->
+    <http pattern="/m/**" create-session="never" entry-point-ref="oauth2AuthenticationEntryPoint"
+          access-decision-manager-ref="oauth2AccessDecisionManager" use-expressions="false">
+        <anonymous enabled="false"/>
+
+        <intercept-url pattern="/m/**" access="ROLE_MOBILE,SCOPE_READ"/>
+
+        <custom-filter ref="mobileResourceServer" before="PRE_AUTH_FILTER"/>
+        <access-denied-handler ref="oauth2AccessDeniedHandler"/>
+        <csrf disabled="true"/>
+    </http>
+
+    <!--
+        每一个资源(resource)的定义, resource-id必须唯一, OauthClientDetails中的resourceIds属性的值由此来的,
+        允许一个Client有多个resource-id, 由逗号(,)分隔
+        每一个定义会在Security Flow中添加一个位于 PRE_AUTH_FILTER 之前的Filter
+    -->
+    <!--unity resource server filter-->
+    <oauth2:resource-server id="unityResourceServer" resource-id="unity-resource" token-services-ref="tokenServices"/>
+
+    <!--mobile resource server filter-->
+    <oauth2:resource-server id="mobileResourceServer" resource-id="mobile-resource" token-services-ref="tokenServices"/>
+
+    <!--Config ClientDetailsService-->
+    <!--<oauth2:client-details-service id="clientDetailsService">-->
+
+    <!--&lt;!&ndash;unity client&ndash;&gt;-->
+    <!--<oauth2:client client-id="unity-client" resource-ids="unity-resource"-->
+    <!--authorized-grant-types="password,authorization_code,refresh_token,implicit"-->
+    <!--secret="unity" authorities="ROLE_UNITY" scope="read,write"/>-->
+
+    <!--&lt;!&ndash;mobile client&ndash;&gt;-->
+    <!--<oauth2:client client-id="mobile-client" resource-ids="mobile-resource"-->
+    <!--authorized-grant-types="password,authorization_code,refresh_token,implicit"-->
+    <!--secret="mobile" authorities="ROLE_MOBILE" scope="read,write"/>-->
+
+    <!--</oauth2:client-details-service>-->
+
+    <!--
+        管理 ClientDetails
+    -->
+    <beans:bean id="clientDetailsService" class="cn.edu.nefu.gdms.model.oauth.CustomJdbcClientDetailsService">
+        <beans:constructor-arg index="0" ref="dataSource"/>
+    </beans:bean>
+
+
+    <!--Config token services-->
+    <!--<beans:bean id="tokenStore" class="org.springframework.security.oauth2.provider.token.InMemoryTokenStore"/>-->
+    <beans:bean id="tokenStore" class="cn.edu.nefu.gdms.model.oauth.CustomJdbcTokenStore">
+        <beans:constructor-arg index="0" ref="dataSource"/>
+    </beans:bean>
+
+    <beans:bean id="tokenServices" class="org.springframework.security.oauth2.provider.token.DefaultTokenServices">
+        <beans:property name="tokenStore" ref="tokenStore"/>
+        <beans:property name="clientDetailsService" ref="clientDetailsService"/>
+        <beans:property name="supportRefreshToken" value="true"/>
+    </beans:bean>
+
+    <!--<global-method-security pre-post-annotations="enabled" proxy-target-class="true">-->
+    <!--<expression-handler ref="oauth2ExpressionHandler"/>-->
+    <!--</global-method-security>-->
+
+    <!--<oauth2:expression-handler id="oauth2ExpressionHandler"/>-->
+    <!--<oauth2:web-expression-handler id="oauth2WebExpressionHandler"/>-->
+
+    <beans:bean class="org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory"
+                id="oAuth2RequestFactory">
+        <beans:constructor-arg name="clientDetailsService" ref="clientDetailsService"/>
+    </beans:bean>
+
+
+    <beans:bean id="oauthUserApprovalHandler" class="cn.edu.nefu.gdms.web.oauth.OauthUserApprovalHandler">
+        <beans:property name="tokenStore" ref="tokenStore"/>
+        <beans:property name="clientDetailsService" ref="clientDetailsService"/>
+        <beans:property name="requestFactory" ref="oAuth2RequestFactory"/>
+        <beans:property name="oauthService" ref="oauthBiz"/>
+    </beans:bean>
+
+
+    <!--
+        管理 Authorization code
+    -->
+    <!--<beans:bean id="jdbcAuthorizationCodeServices"-->
+    <!--class="org.springframework.security.oauth2.provider.code.JdbcAuthorizationCodeServices">-->
+    <!--<beans:constructor-arg index="0" ref="dataSource"/>-->
+    <!--</beans:bean>-->
+    <beans:bean id="jdbcAuthorizationCodeServices"
+                class="cn.edu.nefu.gdms.dao.SOSAuthorizationCodeServices">
+        <beans:constructor-arg index="0" ref="dataSource"/>
+    </beans:bean>
+
+    <!--
+        Security OAuth Flow的核心配置
+        每一个配置对应一类具体的grant_type
+        可根据需求删除或禁用, 如: <oauth2:implicit disabled="true"/>
+        默认支持OAuth2提供的5类grant_type, 若不需要任何一类, 将其配置注释掉(或删掉)即可.
+        若需要自定义 authorization url, 在 <oauth2:authorization-server > 配置中添加authorization-endpoint-url,如: authorization-endpoint-url="/oauth2/authorization"
+        若需要自定义 token url, 在 <oauth2:authorization-server > 配置中添加token-endpoint-url配置, 如:token-endpoint-url="/oauth2/my_token"
+    -->
+    <oauth2:authorization-server client-details-service-ref="clientDetailsService" token-services-ref="tokenServices"
+                                 user-approval-handler-ref="oauthUserApprovalHandler"
+                                 user-approval-page="oauth_approval"
+                                 error-page="oauth_error">
+        <oauth2:authorization-code authorization-code-services-ref="jdbcAuthorizationCodeServices"/>
+        <oauth2:implicit/>
+        <oauth2:refresh-token/>
+        <oauth2:client-credentials/>
+        <oauth2:password/>
+    </oauth2:authorization-server>
+
+
+    <beans:bean id="oauth2AuthenticationEntryPoint"
+                class="org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEntryPoint"/>
+
+
+    <beans:bean id="oauth2ClientDetailsUserService"
+                class="org.springframework.security.oauth2.provider.client.ClientDetailsUserDetailsService">
+        <beans:constructor-arg ref="clientDetailsService"/>
+    </beans:bean>
+
+    <authentication-manager id="oauth2AuthenticationManager">
+        <authentication-provider user-service-ref="oauth2ClientDetailsUserService"/>
+    </authentication-manager>
+
+    <!--
+        扩展Spring Security 默认的 AccessDecisionManager
+        添加对OAuth中 scope 的检查与校验
+    -->
+    <beans:bean id="oauth2AccessDecisionManager" class="org.springframework.security.access.vote.UnanimousBased">
+        <beans:constructor-arg>
+            <beans:list>
+                <beans:bean class="org.springframework.security.oauth2.provider.vote.ScopeVoter"/>
+                <beans:bean class="org.springframework.security.access.vote.RoleVoter"/>
+                <beans:bean class="org.springframework.security.access.vote.AuthenticatedVoter"/>
+            </beans:list>
+        </beans:constructor-arg>
+    </beans:bean>
+
+
+    <beans:bean id="oauth2AccessDeniedHandler"
+                class="org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler"/>
+
+
+    <http disable-url-rewriting="true" use-expressions="false"
+          authentication-manager-ref="authenticationManager">
+        <intercept-url pattern="/oauth/**" access="ROLE_USER,ROLE_UNITY,ROLE_MOBILE"/>
+        <intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+
+        <form-login authentication-failure-url="/login.jsp?authentication_error=1" default-target-url="/index.jsp"
+                    login-page="/login.jsp" login-processing-url="/login.do"/>
+        <logout logout-success-url="/index.jsp" logout-url="/logout.do"/>
+        <access-denied-handler error-page="/login.jsp?authorization_error=2"/>
+        <anonymous/>
+        <csrf disabled="true"/>
+    </http>
+
+
+    <authentication-manager alias="authenticationManager">
+        <authentication-provider user-service-ref="userService">
+            <password-encoder hash="md5"/>
+        </authentication-provider>
+    </authentication-manager>
+
+
+    <!--
+    Oauth server end.............
+    -->
+
+
+</beans:beans>
